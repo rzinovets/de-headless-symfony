@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #232222;
+}
+
+.wrapper {
+    height: calc(100vh - 36px);
+    display: flex;
+    align-self: center;
+}
+
+.container {
+    min-width: 400px;
+    padding: 15px;
+    margin: auto;
+    border-radius: 25px;
+    background-color: #2d2d2d;
+}
+
+.title__wrapper {
+    /*overflow: hidden;*/
+    position: relative;
+    /*height: 50px;*/
+}
+
+.title {
+    padding-bottom: 16px;
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+}
+
+.title__hover {
+    position: absolute;
+    top: 0;
+    left: 35%;
+    padding-bottom: 16px;
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #0057b7;
+    opacity: 0;
+}
+
+.title, .title__hover {
+    transition: opacity 0.5s ease;
+}
+
+.title__wrapper:hover .title {
+    opacity: 0;
+}
+
+.title__wrapper:hover .title__hover {
+    opacity: 1;
+}
+
+.usernameInput {
+    padding-bottom: 8px;
+}
+
+.usernameInput, .passwordInput {
+    display: flex;
+    flex-direction: column;
+}
+
+.usernameInput__label, .passwordInput__label {
+    color: #ffffff;
+    padding-left: 10px;
+}
+
+.inputUsername__form, .inputPassword__form {
+    color: #ffffff;
+    min-width: 350px;
+    padding: 3px 7px 4px;
+    margin: 8px 0;
+    min-height: 30px;
+    background-color: #404040;
+    border-radius: 10px;
+    border: 1px solid #484646;
+
+    /*display: inline-block;*/
+    /*box-sizing: border-box;*/
+}
+
+.buttonWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #2563EB;
+    color: white;
+    padding: 14px;
+    margin-top: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    width: 100px;
+    border-radius: 10px;
+    transition: 0.4s;
+}
+
+/* Add a hover effect for buttons */
+button:hover {
+    background-color: transparent;
+    border: 1px solid #FFFFFF;
+    opacity: 0.8;
+}
