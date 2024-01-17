@@ -1,0 +1,11 @@
+Config:
+  type: object
+  config:
+    description: "Config"
+    fields:
+      code:
+        type: "String"
+        description: "The key of config value"
+      value:
+        type: "String"
+        description: "Value config"

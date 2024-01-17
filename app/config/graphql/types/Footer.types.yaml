@@ -1,0 +1,23 @@
+Footer:
+  type: object
+  config:
+    description: "Footer"
+    fields:
+      id:
+        type: "Int"
+        description: "Id footer item"
+      column_footer:
+        type: "Int"
+        description: "Number of footer column"
+      title:
+        type: "String"
+        description: "Title of Menu"
+      value:
+        type: "String"
+        description: "Url of Menu"
+      position:
+        type: "String"
+        description: "Position item in column"
+      type:
+        type: "Int"
+        description: "type of footer item"

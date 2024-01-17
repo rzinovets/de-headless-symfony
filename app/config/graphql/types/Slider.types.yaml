@@ -1,0 +1,13 @@
+Slider:
+  type: object
+  config:
+    description: "Slider details"
+    fields:
+      id:
+        type: "Int"
+      title:
+        type: "String"
+      slider_key:
+        type: "String"
+      slides:
+        type: "[Slide]"

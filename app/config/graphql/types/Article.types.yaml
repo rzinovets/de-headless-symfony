@@ -1,0 +1,18 @@
+Article:
+  type: object
+  config:
+    fields:
+      id:
+        type: "Int"
+      title:
+        type: "String"
+      short_description:
+        type: "String"
+      description:
+        type: "String"
+      is_enabled:
+        type: "Boolean"
+      date:
+        type: "DateTime"
+      url_key:
+        type: "String"

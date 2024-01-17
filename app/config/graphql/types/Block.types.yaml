@@ -1,0 +1,18 @@
+Block:
+  type: object
+  config:
+    fields:
+      id:
+        type: "Int!"
+      title:
+        type: "String"
+      identifier:
+        type: "String"
+      content:
+        type: "String"
+      is_active:
+        type: "Boolean"
+      image:
+        type: "String"
+      imagePath:
+        type: "String"

@@ -1,0 +1,88 @@
+Mutation:
+  type: object
+  config:
+    fields:
+      CreateAccount:
+        type: CreateAccountPayload!
+        resolve: "@=mutation('create_account', args['input'])"
+        args:
+          input:
+            type: CreateAccountInput!
+      LoginAccount:
+        type: Token!
+        resolve: "@=mutation('login_account', args['input'])"
+        args:
+          input:
+            type: LoginAccountInput!
+CreateAccountPayload:
+  type: object
+  config:
+    fields:
+      id:
+        type: "Int!"
+      full_name:
+        type: "String"
+      date_of_birth:
+        type: "DateTime"
+      gender:
+        type: "String"
+      email:
+        type: "String"
+      phone_number:
+        type: "Int"
+      street_address_line1:
+        type: "String"
+      street_address_line2:
+        type: "String"
+      city:
+        type: "String"
+      post_code:
+        type: "String"
+      disabilities:
+        type: "String"
+CreateAccountInput:
+  type: input-object
+  config:
+    fields:
+      account_id:
+        type: "Int"
+      full_name:
+        type: "String"
+      date_of_birth:
+        type: "DateTime"
+      gender:
+        type: "String"
+      email:
+        type: "String"
+      phone_number:
+        type: "Int"
+      street_address_line1:
+        type: "String"
+      street_address_line2:
+        type: "String"
+      city:
+        type: "String"
+      post_code:
+        type: "String"
+      disabilities:
+        type: "String"
+      password:
+        type: "String"
+Token:
+  type: object
+  config:
+    fields:
+      id:
+        type: "Int"
+      token:
+        type: "String"
+      life_time:
+        type: "Int"
+LoginAccountInput:
+  type: input-object
+  config:
+    fields:
+      email:
+        type: "String"
+      password:
+        type: "String"

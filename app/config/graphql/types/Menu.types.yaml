@@ -1,0 +1,18 @@
+Menu:
+  type: object
+  config:
+    description: "Menu"
+    fields:
+      id:
+        type: "Int"
+        description: "Id menu item"
+      parent_id:
+        type: "Int"
+        description: "Parent id of menu item"
+      title:
+        type: "String"
+        description: "Title of Menu"
+      url:
+        type: "String"
+        description: "Url of Menu"
+

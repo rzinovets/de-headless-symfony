@@ -1,0 +1,23 @@
+Slide:
+  type: object
+  config:
+    description: "Slide details"
+    fields:
+      id:
+        type: "Int"
+      is_enabled:
+        type: "Boolean"
+      slider_id:
+        type: "Int"
+      title:
+        type: "String"
+      description:
+        type: "String"
+      image:
+        type: "String"
+      button_url:
+        type: "String"
+      button_title:
+        type: "String"
+      imagePath:
+        type: "String"

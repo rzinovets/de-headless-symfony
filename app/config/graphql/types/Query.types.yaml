@@ -1,0 +1,78 @@
+Query:
+  type: object
+  config:
+    description: "Account ORM repository"
+    fields:
+      # Getting data about the user by his ID
+      account:
+        type: "Account"
+        args:
+          id:
+            description: "Resolves using the account id."
+            type: "Int"
+        resolve: "@=resolver('Account', [args])"
+      # Getting data about all users in the system
+      accounts:
+        type: "[Account]"
+        resolve: '@=resolver("AccountCollection")'
+      # Getting data about config by code
+      config:
+        type: "Config"
+        args:
+          code:
+            description: "Resolves using the config code."
+            type: "String"
+        resolve: "@=resolver('Config', [args])"
+      # Getting data about all menu item
+      menu:
+        type: "[Menu]"
+        resolve: '@=resolver("Menu")'
+      # Getting data about article by his ID
+      article:
+        type: "Article"
+        args:
+          id:
+            description: "Resolves using the article id."
+            type: "Int"
+        resolve: "@=resolver('Article', [args])"
+      # Getting data about the user by his Url key
+      articleByKey:
+        type: "Article"
+        args:
+          url_key:
+            description: "Resolves using the article url key."
+            type: "String"
+        resolve: "@=resolver('ArticleByKey', [args])"
+      # Getting data limit number of articles
+      articles:
+        type: "[Article]"
+        args:
+          limit:
+            type: "Int"
+        resolve: "@=resolver('ArticleCollection', [args])"
+      # Getting data about all footers item
+      footer:
+        type: "[Footer]"
+        resolve: '@=resolver("FooterCollection")'
+      # Getting data about all sliders
+      sliders:
+        type: "[Slider]"
+        resolve: '@=resolver("SliderCollection")'
+      # Getting slider with child slides by key
+      sliderByKey:
+        type: "Slider"
+        args:
+          slider_key:
+            description: "Resolves using the slider key."
+            type: "String"
+        resolve: "@=resolver('SliderByKey', [args])"
+      # Getting block by identifier
+      block:
+        type: "Block"
+        args:
+          identifier:
+            description: "Resolves using the identifier."
+            type: "String"
+        resolve: "@=resolver('BlockByIdentifier', [args])"
+
+
