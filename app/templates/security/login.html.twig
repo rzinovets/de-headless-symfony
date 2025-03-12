@@ -8,23 +8,23 @@
     <div class="wrapper">
         <div class="container">
             <div class="title__wrapper">
-                <h1 class="title">Вход</h1>
-                <h1 class="title__hover">Добро пожаловать</h1>
+                <h1 class="title">Login</h1>
+                <h1 class="title__hover">Welcome Back</h1>
             </div>
 
             <form method="post" action="{{ path('admin') }}">
                 <div class="input-group">
-                    <label for="username" class="input-label">Имя пользователя</label>
                     <input type="text" id="username" name="username" class="input-form" required autofocus>
+                    <label for="username" class="input-label">Username</label>
                 </div>
 
                 <div class="input-group">
-                    <label for="password" class="input-label">Пароль</label>
                     <input type="password" id="password" name="password" class="input-form" required>
+                    <label for="password" class="input-label">Password</label>
                 </div>
 
                 <div class="button-wrapper">
-                    <button type="submit" class="btn">Войти</button>
+                    <button type="submit" class="btn">Sign In</button>
                 </div>
             </form>
         </div>
