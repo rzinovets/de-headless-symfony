@@ -5,8 +5,12 @@ services:
     container_name: redepy_php
     build:
       context: ./php
-    ports:
-      - '9000:9000'
+      args:
+        XDEBUG_CLIENT_HOST: "${XDEBUG_CLIENT_HOST:-172.17.0.1}"
+        XDEBUG_CLIENT_PORT: "${XDEBUG_CLIENT_PORT:-9001}"
+        XDEBUG_IDE_KEY: "${XDEBUG_IDE_KEY:-PHPSTORM}"
+    extra_hosts:
+      - '172.17.0.1:host-gateway'
     volumes:
       - ./app:/var/www/de-headless-symfony
     depends_on:
