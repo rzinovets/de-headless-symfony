@@ -184,6 +184,9 @@
             "templates/base.html.twig"
         ]
     },
+    "symfony/ux-twig-component": {
+        "version": "v2.9.2"
+    },
     "symfony/validator": {
         "version": "6.0",
         "recipe": {

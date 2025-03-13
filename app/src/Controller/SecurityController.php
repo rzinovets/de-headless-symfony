@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class SecurityController extends AbstractController
 {
-    const SECURITY_FORM = 'security/login.html.twig';
+    public const SECURITY_FORM = 'security/login.html.twig';
 
     use TargetPathTrait;
 
@@ -31,12 +31,10 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @return void
-     *
      * @throws Exception
      */
     #[Route('/logout', name: 'security_logout')]
     public function logout(): void {
-        throw new ('This should never be reached!');
+        throw new Exception('This should never be reached!');
     }
 }

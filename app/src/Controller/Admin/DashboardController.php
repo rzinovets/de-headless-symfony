@@ -10,7 +10,6 @@ use App\Entity\Menu;
 use App\Entity\Slider;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Locale;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,19 +27,13 @@ class DashboardController extends AbstractDashboardController
      */
     public function configureDashboard(): Dashboard {
         return Dashboard::new()
-            ->setTitle('Redepy')
+            ->setTitle('Custom CMS')
             ->setFaviconPath('favicon.svg')
             ->setTextDirection('ltr')
-            ->setLocales(['en', 'ru'])
             ->setLocales([
                 'en' => '🇬🇧 English',
                 'ru' => '🇷🇺 Russian'
-            ])
-            ->setLocales([
-                'en', // locale without custom options
-                Locale::new('ru', 'russian', 'far fa-language')
             ]);
-
     }
 
     /**

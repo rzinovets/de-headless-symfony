@@ -12,7 +12,7 @@
                 <h1 class="title__hover">Welcome Back</h1>
             </div>
 
-            <form method="post" action="{{ path('admin') }}">
+            <form method="post" action="{{ path('security_login') }}">
                 <div class="input-group">
                     <input type="text" id="username" name="username" class="input-form" required autofocus>
                     <label for="username" class="input-label">Username</label>
@@ -22,6 +22,8 @@
                     <input type="password" id="password" name="password" class="input-form" required>
                     <label for="password" class="input-label">Password</label>
                 </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                 <div class="button-wrapper">
                     <button type="submit" class="btn">Sign In</button>
