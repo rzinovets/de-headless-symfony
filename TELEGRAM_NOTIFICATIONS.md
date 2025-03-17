@@ -25,15 +25,3 @@ $telegramNotification
 
 $this->notificationService->send([$telegramNotification]);
 ```
-
-## 🔧 Configuration Steps
-
-1. Ensure that `NotificationService` and `TelegramGroupRepository` are properly set up.
-2. Modify the `findByCode('test')` method to target the correct Telegram group.
-3. Implement the logic in a relevant controller, such as `SecurityController`.
-
-## 🔍 Where It’s Used
-
-This logic is currently tested inside `SecurityController` under the `/login` route. Adjust it as needed for other use cases.
-
-📌 _For further modifications, refer to the project's notification service implementation._
