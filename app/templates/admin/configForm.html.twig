@@ -1,0 +1,36 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+{% block content %}
+    <div class="content config-form">
+        <h1 class="config-title">Configuration Settings</h1>
+        <form action="{{ url('config_save') }}" method="post" class="config-form-container">
+            {% for groupCode, groupData in config %}
+                <div class="config-group">
+                    <h2 class="config-group-title">{{ groupData.label }}</h2>
+                    <div class="config-group-fields">
+                        {% for labelCode, labelData in groupData.label_data %}
+                            <div class="form-group">
+                                <label for="{{ labelCode }}" class="form-label">{{ labelData.label }}</label>
+                                {% if labelData.type == 'select' %}
+                                    <select class="form-control form-select" id="{{ labelCode }}" name="{{ labelCode }}">
+                                        {% for optionId, optionText in labelData.option_data %}
+                                            <option value="{{ optionId }}" {{ labelData.value == optionId ? 'selected' : '' }}>
+                                                {{ optionText }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                {% elseif labelData.type == 'textarea' %}
+                                    <textarea class="form-control form-textarea" id="{{ labelCode }}" name="{{ labelCode }}" rows="5">{{ labelData.value }}</textarea>
+                                {% else %}
+                                    <input type="{{ labelData.type }}" class="form-control form-input" id="{{ labelCode }}" name="{{ labelCode }}" value="{{ labelData.value }}">
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">Save Changes</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
