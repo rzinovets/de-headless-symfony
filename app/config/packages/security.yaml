@@ -42,10 +42,11 @@ security:
                 enable_csrf: true
                 # The page users are redirect to when there is no previous page stored in the
                 # session (for example when the users access directly to the login page).
-                default_target_path: blog_index
+                default_target_path: admin
                 password_parameter: password
                 username_parameter: username
-
+            custom_authenticators:
+                - App\Security\AppAuthenticator
             logout:
                 # The route name the user can go to in order to logout
                 path: security_logout
@@ -53,7 +54,8 @@ security:
                 target: /login
 
                 # Secure the logout against CSRF
-                csrf_parameter: logout
+                csrf_parameter: _csrf_token
+                csrf_token_id: logout
                 csrf_token_generator: security.csrf.token_manager
 
             # needed because in tests we redefine the 'main' firewall to use

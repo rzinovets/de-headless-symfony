@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class SecurityController extends AbstractController
 {
-    public const SECURITY_FORM = 'security/login.html.twig';
+    public const string SECURITY_FORM = 'security/login.html.twig';
 
     use TargetPathTrait;
 
