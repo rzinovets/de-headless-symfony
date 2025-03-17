@@ -3,7 +3,7 @@
 ### Installation project
 1. `git clone ..`
 2. `docker-compose up -d --build`
-3. `docker exec -ti redepy_php /bin/bash`
+3. `docker exec -ti container_name /bin/bash`
 4. `composer install`
 5. Go to [http://localhost/](http://localhost/)
 6. `php bin/console doctrine:migrations:migrate`
