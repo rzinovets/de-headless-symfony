@@ -49,3 +49,6 @@ services:
         class: App\GraphQL\Resolver\BlockResolver
         tags:
             - { name: overblog_graphql.resolver }
+    TelegramBot\Api\BotApi:
+        arguments:
+            $token: '%env(TELEGRAM_BOT_API_TOKEN)%'

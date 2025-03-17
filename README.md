@@ -49,6 +49,10 @@ echo '127.0.0.1 localhost' | sudo tee -a /etc/hosts
 
 For detailed instructions on setting up XDebug with PHPStorm and Docker, refer to the dedicated guide: [XDEBUG_SETUP.md](XDEBUG_SETUP.md).
 
+## 📢 Telegram Notifications
+
+For detailed instructions on setting up Telegram notifications, refer to the dedicated guide: [TELEGRAM_NOTIFICATIONS.md](TELEGRAM_NOTIFICATIONS.md).
+
 ---
 
 ## 📌 Custom CLI Commands
