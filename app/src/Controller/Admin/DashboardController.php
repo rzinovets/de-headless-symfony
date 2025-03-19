@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Admin;
 use App\Entity\Article;
 use App\Entity\Block;
+use App\Entity\ContactForm;
 use App\Entity\Footer;
 use App\Entity\Menu;
 use App\Entity\Slider;
@@ -58,6 +59,8 @@ class DashboardController extends AbstractDashboardController
             ->setPermission('ROLE_ADMIN');
         yield MenuItem::section('');
         yield MenuItem::linkToCrud('Blocks', 'fa fa-picture-o', Block::class);
+        yield MenuItem::section('');
+        yield MenuItem::linkToCrud('Contact Form', 'fa fa-address-book', ContactForm::class);
         yield MenuItem::section('');
         yield MenuItem::section('Exit');
         yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');

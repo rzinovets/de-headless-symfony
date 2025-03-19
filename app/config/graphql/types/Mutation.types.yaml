@@ -14,6 +14,12 @@ Mutation:
         args:
           input:
             type: LoginAccountInput!
+      CreateContactForm:
+        type: ContactForm!
+        resolve: "@=mutation('create_contact_form', args['input'])"
+        args:
+          input:
+            type: CreateContactFormInput!
 CreateAccountPayload:
   type: object
   config:
@@ -86,3 +92,15 @@ LoginAccountInput:
         type: "String"
       password:
         type: "String"
+CreateContactFormInput:
+  type: input-object
+  config:
+    fields:
+      name:
+        type: "String!"
+      email:
+        type: "String!"
+      subject:
+        type: "String!"
+      message:
+        type: "String!"

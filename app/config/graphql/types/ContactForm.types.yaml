@@ -1,0 +1,16 @@
+ContactForm:
+  type: object
+  config:
+    fields:
+      id:
+        type: "Int!"
+      name:
+        type: "String!"
+      email:
+        type: "String!"
+      subject:
+        type: "String!"
+      message:
+        type: "String!"
+      createdAt:
+        type: "DateTime!"
