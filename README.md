@@ -2,7 +2,9 @@
 
 ![Symfony](https://img.shields.io/badge/Symfony-6.4-blue.svg?style=flat-square)
 ![PHP](https://img.shields.io/badge/PHP-8.3-blue.svg?style=flat-square)
+![GraphQl](https://img.shields.io/badge/GraphQL-✔-pink.svg?style=flat-square)
 ![Docker](https://img.shields.io/badge/Docker-✔-blue.svg?style=flat-square)
+![EasyAdmin](https://img.shields.io/badge/EasyAdmin-%E2%9C%94-green.svg?style=flat-square)
 
 ## 📌 Project Information
 A custom CMS built on Symfony, designed for flexibility and ease of development. This project utilizes Docker for containerized development and supports GraphQL.
@@ -62,20 +64,11 @@ For detailed instructions on setting up Telegram notifications, refer to the ded
 php bin/console app:create-admin <login> <password>
 ```
 
-### 🏗 Symfony Commands
-```sh
-# 1. Clear cache
-php bin/console cache:clear
-
-# 2. Drop database (force delete!)
-php bin/console doctrine:database:drop --force
-```
-
 ---
 
-## 🔬 GraphQL Testing
+## 🔬 GraphQL Testing | Documentation
 
-To test GraphQL queries, navigate to:
+To test GraphQL queries or check documentation, navigate to:
 [http://localhost/graphiql](http://localhost/graphiql)
 
 ---
