@@ -6,7 +6,6 @@ use App\Entity\Article;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use App\Admin\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
@@ -31,7 +30,7 @@ class ArticleCrudController extends AbstractCrudController
             TextField::new('title'),
             TextField::new('url_key'),
             BooleanField::new('is_enabled', 'Enabled'),
-            TextEditorField::new('short_description'),
+            TextField::new('short_description'),
             Field\TinyField::new('description')
                 ->hideOnIndex()
                 ->addUploadContentUrl(
