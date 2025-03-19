@@ -28,38 +28,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SlideCrudController extends AbstractCrudController
 {
-    /**
-     * @var null
-     */
-    protected $entityIdRequest = null;
-
-    /**
-     * @var ManagerRegistry
-     */
-    protected ManagerRegistry $registry;
-
-    /**
-     * @var AdminUrlGenerator
-     */
-    private AdminUrlGenerator $adminUrlGenerator;
-
-    /**
-     * @var Request
-     */
-    protected Request $request;
+    protected ?int $entityIdRequest = null;
 
     /**
      * @param ManagerRegistry $registry
      * @param AdminUrlGenerator $adminUrlGenerator
+     * @param Request $request
      */
     public function __construct(
-        ManagerRegistry   $registry,
-        AdminUrlGenerator $adminUrlGenerator
-    ) {
-        $this->request = Request::createFromGlobals();
-        $this->registry = $registry;
-        $this->adminUrlGenerator = $adminUrlGenerator;
-    }
+        private readonly ManagerRegistry $registry,
+        private readonly AdminUrlGenerator $adminUrlGenerator,
+        private readonly Request $request = new Request()
+    ) {}
 
     /**
      * @return string

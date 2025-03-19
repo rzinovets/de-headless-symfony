@@ -4,9 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Menu;
 use App\Entity\MenuTree;
+use App\Repository\MenuRepository;
+use App\Repository\MenuTreeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -16,44 +17,30 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
 class MenuCrudController extends AbstractCrudController
 {
-    /**
-     * @var ManagerRegistry
-     */
-    private ManagerRegistry $em;
-
-    /**
-     * @var ObjectRepository
-     */
-    protected ObjectRepository $menuRepository;
-
-    /**
-     * @var ObjectRepository
-     */
-    protected ObjectRepository $menuTreeRepository;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private EntityManagerInterface $entityManager;
+    private const string MAIN_MENU_LABEL = "Main menu item";
+    private const int MAIN_MENU_ID = 0;
+    private const string PARENT_ID_KEY = 'parent_id';
+    private const string MENU_KEY = 'Menu';
+    private const string POST_METHOD = 'POST';
 
     /**
      * @param ManagerRegistry $registry
+     * @param MenuRepository $menuRepository
+     * @param MenuTreeRepository $menuTreeRepository
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(
-        ManagerRegistry        $registry,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->em = $registry;
-        $this->menuRepository = $this->em->getRepository(Menu::class);
-        $this->menuTreeRepository = $this->em->getRepository(MenuTree::class);
-        $this->entityManager = $entityManager;
-    }
+        private readonly ManagerRegistry $registry,
+        private readonly MenuRepository $menuRepository,
+        private readonly MenuTreeRepository $menuTreeRepository,
+        private readonly EntityManagerInterface $entityManager,
+    ) {}
 
     /**
      * @return string
      */
-    public static function getEntityFqcn(): string {
+    public static function getEntityFqcn(): string
+    {
         return Menu::class;
     }
 
@@ -61,118 +48,105 @@ class MenuCrudController extends AbstractCrudController
      * @param string $pageName
      * @return iterable
      */
-    public function configureFields(string $pageName): iterable {
+    public function configureFields(string $pageName): iterable
+    {
         return [
             TextField::new('title'),
             NumberField::new('weight'),
-            ChoiceField::new('parent_id', 'Sub menu')->setChoices(
-                $this->createArrayOfMenu($this->buildTree($this->createArrayOfMenuTree()))
+            ChoiceField::new(self::PARENT_ID_KEY, 'Sub menu')->setChoices(
+                $this->buildMenuOptions($this->createMenuTreeStructure())
             ),
             UrlField::new('url')
         ];
     }
 
     /**
-     * @param $orderedArray
-     * @param $level
+     * @param array $menuTree
      * @return int[]
      */
-    public function createArrayOfMenu($orderedArray, $level = ""): array {
-        $resultArray = [
-            "Main menu item" => 0,
-        ];
+    private function buildMenuOptions(array $menuTree): array
+    {
+        $options = [self::MAIN_MENU_LABEL => self::MAIN_MENU_ID];
+        $this->flattenMenuTree($menuTree, $options);
+        return $options;
+    }
 
-        foreach ($orderedArray as $key => $item) {
-            try {
-                $resultArray[$level . $item['title']] = $key;
-            } catch (\Exception $e) {
-            }
-
-            if (isset($item['sub'])) {
-                $childItems = $this->createArrayOfMenu($item['sub'], $level . "--");
-                $resultArray = array_merge($resultArray, $childItems);
+    /**
+     * @param array $menuTree
+     * @param array $options
+     * @param string $prefix
+     * @return void
+     */
+    private function flattenMenuTree(array $menuTree, array &$options, string $prefix = ''): void
+    {
+        foreach ($menuTree as $id => $menu) {
+            $label = $prefix . $menu['title'];
+            $options[$label] = $id;
+            if (!empty($menu['children'])) {
+                $this->flattenMenuTree($menu['children'], $options, $prefix . ' > ');
             }
         }
-
-        return $resultArray;
     }
 
     /**
      * @return array
      */
-    public function createArrayOfMenuTree(): array {
+    private function createMenuTreeStructure(): array
+    {
         $menuTreeCollection = $this->menuTreeRepository->findAll();
         $menuCollection = $this->menuRepository->findAll();
 
         $menuLabels = [];
         $menuWeight = [];
-
         foreach ($menuCollection as $menu) {
             $menuLabels[$menu->getId()] = $menu->getTitle();
             $menuWeight[$menu->getId()] = $menu->getWeight();
         }
 
         $menuData = [];
-
         foreach ($menuTreeCollection as $menuEntity) {
-            $menuTreeEntityId = $menuEntity->getEntityId();
-            $menuData[$menuTreeEntityId] = [
-                'weight' => $menuWeight[$menuTreeEntityId] ?? 0,
+            $id = $menuEntity->getEntityId();
+            $menuData[$id] = [
+                'id' => $id,
+                'title' => $menuLabels[$id] ?? '',
+                'weight' => $menuWeight[$id] ?? 0,
                 'parent_id' => $menuEntity->getParentId(),
-                'title' => $menuLabels[$menuTreeEntityId] ?? ""
+                'children' => []
             ];
         }
 
-        uasort($menuData, fn($a, $b) => $a['weight'] < $b['weight']);
-
-        return $menuData;
-    }
-
-    /**
-     * @param array $listIdParent
-     * @return array
-     */
-    public function buildTree(array $listIdParent): array {
-        foreach ($listIdParent as $id => $node) {
-            $listIdParent[$node['parent_id']]['sub'][$id] =& $listIdParent[$id];
+        foreach ($menuData as $id => &$menu) {
+            if ($menu['parent_id'] !== self::MAIN_MENU_ID && isset($menuData[$menu['parent_id']])) {
+                $menuData[$menu['parent_id']]['children'][$id] =& $menu;
+            }
         }
 
-        try {
-            return $listIdParent[1]['sub'];
-        } catch (\Exception $e) {
-        }
-
-        return $listIdParent;
+        return array_filter($menuData, fn($menu) => $menu['parent_id'] === self::MAIN_MENU_ID);
     }
 
     /**
      * @param AdminContext $context
-     * @return \EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function new(AdminContext $context) {
-        $em = $this->entityManager;
-        $menu = $context->getRequest()->get('Menu');
-        $menuTree = $this->menuTreeRepository->find('parent_id');
+    public function new(AdminContext $context)
+    {
+        $menu = $context->getRequest()->get(self::MENU_KEY);
+        $menuTree = $this->menuTreeRepository->find(self::PARENT_ID_KEY) ?? new MenuTree();
 
-        if ($menuTree === null) {
-            $menuTree = new MenuTree();
-        }
-
-        if ($context->getRequest()->getMethod() == 'POST') {
-            $parentId = $menu['parent_id'];
+        if ($context->getRequest()->getMethod() === self::POST_METHOD) {
+            $parentId = $menu[self::PARENT_ID_KEY];
             $menuTree->setParentId($parentId);
-            unset($menu['parent_id']);
-            $context->getRequest()->request->remove('Menu');
-            $context->getRequest()->request->set('Menu', $menu);
+            unset($menu[self::PARENT_ID_KEY]);
+            $context->getRequest()->request->remove(self::MENU_KEY);
+            $context->getRequest()->request->set(self::MENU_KEY, $menu);
         }
 
         $result = parent::new($context);
 
-        if ($context->getRequest()->getMethod() == 'POST') {
+        if ($context->getRequest()->getMethod() === self::POST_METHOD) {
             $entityId = $context->getEntity()->getInstance()->getId();
             $menuTree->setEntityId($entityId);
-            $em->persist($menuTree);
-            $em->flush();
+            $this->entityManager->persist($menuTree);
+            $this->entityManager->flush();
         }
 
         return $result;

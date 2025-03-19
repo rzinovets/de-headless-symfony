@@ -13,75 +13,63 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ConfigLabelsController extends DashboardController
 {
-    const CONFIG_FORM = 'admin/configForm.html.twig';
-    const SAVE_URL = '/admin/config/save';
+    private const CONFIG_FORM = 'admin/configForm.html.twig';
+    private const SAVE_URL = '/admin/config/save';
 
-    /**
-     * @var ManagerRegistry
-     */
-    private ManagerRegistry $em;
     /**
      * @var ObjectRepository
      */
     protected ObjectRepository $groupRepository;
+
     /**
      * @var ObjectRepository
      */
     protected ObjectRepository $valueRepository;
-    /**
-     * @var AdminUrlGenerator
-     */
-    protected AdminUrlGenerator $adminUrlGenerator;
 
     /**
      * @param ManagerRegistry $registry
      * @param AdminUrlGenerator $adminUrlGenerator
      */
     public function __construct(
-        ManagerRegistry   $registry,
-        AdminUrlGenerator $adminUrlGenerator
+        private readonly ManagerRegistry $registry,
+        private readonly AdminUrlGenerator $adminUrlGenerator,
     ) {
-        $this->adminUrlGenerator = $adminUrlGenerator;
-        $this->em = $registry;
-        $this->groupRepository = $this->em->getRepository(ConfigGroups::class);
-        $this->valueRepository = $this->em->getRepository(ConfigValues::class);
+        $this->groupRepository = $this->registry->getRepository(ConfigGroups::class);
+        $this->valueRepository = $this->registry->getRepository(ConfigValues::class);
     }
 
     /**
      * @return Response
      */
     #[Route('/admin/config', name: 'admin_config')]
-    public function index(): Response {
+    public function index(): Response
+    {
         $configArray = $this->formAnArray();
 
         return $this->render(self::CONFIG_FORM, [
             'config' => $configArray,
-            'url' => self::SAVE_URL
+            'url' => self::SAVE_URL,
         ]);
     }
 
     /**
      * @param Request $request
-     * @param ManagerRegistry $doctrine
      * @return Response
      */
     #[Route(self::SAVE_URL, name: 'config_save')]
-    public function save(Request $request, ManagerRegistry $doctrine): Response {
-        $entityManager = $doctrine->getManager();
-
+    public function save(Request $request): Response
+    {
+        $entityManager = $this->registry->getManager();
         $configParams = $request->request->all();
 
         foreach ($configParams as $configCode => $configValue) {
-            $configValues = $this->valueRepository->find($configCode);
-            if ($configValues === null) {
-                $configValues = new ConfigValues();
-            }
-
+            $configValues = $this->valueRepository->find($configCode) ?? new ConfigValues();
             $configValues->setValue($configValue);
             $configValues->setCode($configCode);
             $entityManager->persist($configValues);
-            $entityManager->flush();
         }
+
+        $entityManager->flush();
 
         return $this->redirectToRoute('admin_config');
     }
@@ -89,63 +77,45 @@ class ConfigLabelsController extends DashboardController
     /**
      * @return array
      */
-    public function formAnArray(): array {
-        $groupCollection = $this->groupRepository->findAll();
-
-        $configArray = [];
-
-        foreach ($groupCollection as $configGroupEntity) {
-            $configArray[$configGroupEntity->getCode()] = [
-                'label_data' => [],
-                'code' => $configGroupEntity->getCode(),
-                'label' => $configGroupEntity->getLabel()
-            ];
-            $labelData = $this->createArrayLabelData($configGroupEntity);
-            $configArray[$configGroupEntity->getCode()]['label_data'] = $labelData;
-        }
-        return $configArray;
+    private function formAnArray(): array
+    {
+        return array_map(fn($configGroupEntity) => [
+            'label_data' => $this->createArrayLabelData($configGroupEntity),
+            'code' => $configGroupEntity->getCode(),
+            'label' => $configGroupEntity->getLabel(),
+        ], $this->groupRepository->findAll());
     }
 
     /**
      * @param $configLabelsEntity
      * @return array
      */
-    public function createArrayOfOptions($configLabelsEntity): array {
-        $optionData = [];
-
-        foreach ($configLabelsEntity->getOptions() as $configOptionsEntity) {
-            $optionId = $configOptionsEntity->getId();
-            $optionData[$optionId] = $configOptionsEntity->getText();
-        }
-        return $optionData;
+    private function createArrayOfOptions($configLabelsEntity): array
+    {
+        return array_reduce($configLabelsEntity->getOptions(), function ($options, $configOptionsEntity) {
+            $options[$configOptionsEntity->getId()] = $configOptionsEntity->getText();
+            return $options;
+        }, []);
     }
 
     /**
      * @param $configGroupEntity
      * @return array
      */
-    public function createArrayLabelData($configGroupEntity): array {
+    private function createArrayLabelData($configGroupEntity): array
+    {
         $valueCollection = $this->valueRepository->findAll();
+        $configArrayOfValues = array_column(
+            array_map(fn($value) => [$value->getCode() => $value->getValue()], $valueCollection),
+            null
+        );
 
-        $labelData = [];
-        $configArrayOfValues = [];
-
-        foreach ($valueCollection as $value) {
-            $configArrayOfValues[$value->getCode()] = $value->getValue();
-        }
-
-        foreach ($configGroupEntity->getLabels() as $configLabelsEntity) {
-            $codeValue = $configGroupEntity->getCode() . '/' . $configLabelsEntity->getCode();
-            $optionData = $this->createArrayOfOptions($configLabelsEntity);
-            $labelCode = $configLabelsEntity->getCode();
-            $labelData[$labelCode] = [
-                'option_data' => $optionData,
-                'label' => $configLabelsEntity->getLabel(),
-                'code' => $configLabelsEntity->getCode(),
-                'type' => $configLabelsEntity->getType(),
-                'value' => $configArrayOfValues[$codeValue] ?? ''
-            ];
-        }
-        return $labelData;
+        return array_map(fn($configLabelsEntity) => [
+            'option_data' => $this->createArrayOfOptions($configLabelsEntity),
+            'label' => $configLabelsEntity->getLabel(),
+            'code' => $configLabelsEntity->getCode(),
+            'type' => $configLabelsEntity->getType(),
+            'value' => $configArrayOfValues[$configGroupEntity->getCode() . '/' . $configLabelsEntity->getCode()] ?? '',
+        ], $configGroupEntity->getLabels());
     }
 }

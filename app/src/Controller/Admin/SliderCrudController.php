@@ -14,17 +14,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class SliderCrudController extends AbstractCrudController
 {
     /**
-     * @var AdminUrlGenerator
-     */
-    private $adminUrlGenerator;
-
-    /**
      * @param AdminUrlGenerator $adminUrlGenerator
      */
     public function __construct(
-        AdminUrlGenerator $adminUrlGenerator
+        private readonly AdminUrlGenerator $adminUrlGenerator
     ) {
-        $this->adminUrlGenerator = $adminUrlGenerator;
     }
 
     /**

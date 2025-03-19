@@ -2,7 +2,7 @@
 
 namespace App\GraphQL\Resolver;
 
-use App\Model\MenuTree;
+use App\Services\Menu\MenuTree;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 
