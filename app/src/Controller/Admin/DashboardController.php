@@ -10,6 +10,7 @@ use App\Entity\Footer;
 use App\Entity\Menu;
 use App\Entity\Slider;
 use App\Entity\User;
+use Cron\CronBundle\Entity\CronJob;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -61,6 +62,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Blocks', 'fa fa-picture-o', Block::class);
         yield MenuItem::section('');
         yield MenuItem::linkToCrud('Contact Form', 'fa fa-address-book', ContactForm::class);
+        yield MenuItem::section('');
+        yield MenuItem::linkToCrud('Cron', 'fa fa-crown', CronJob::class);
         yield MenuItem::section('');
         yield MenuItem::section('Exit');
         yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
