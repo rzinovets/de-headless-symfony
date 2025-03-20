@@ -20,17 +20,11 @@ class Slider
     #[ORM\Column(type: Types::TEXT)]
     private ?string $title = null;
 
-    #[Assert\Regex(
-        pattern: '/^[a-z]+$/',
-        message: 'Url key is not valid'
-    )]
     #[ORM\Column]
     private ?string $slider_key = null;
 
     #[ORM\OneToMany(mappedBy: "slider", targetEntity: "Slide")]
     private $slides;
-
-    private $mediaUrl;
 
     public function __construct()
     {

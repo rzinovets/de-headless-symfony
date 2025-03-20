@@ -1,0 +1,17 @@
+Banner:
+  type: object
+  config:
+    description: "Banner"
+    fields:
+      id:
+        type: "Int!"
+      title:
+        type: "String"
+      buttonTitle:
+        type: "String"
+      image:
+        type: "String"
+      isActive:
+        type: "Boolean"
+      url:
+        type: "String"

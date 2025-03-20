@@ -29,10 +29,6 @@ class Block
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    private $mediaUrl;
-
-    private $imagePath;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -93,24 +89,7 @@ class Block
 
     public function setImage(string $image): self
     {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getImagePath(): string
-    {
-        return $this->mediaUrl.'/'.$this->getImage();
-    }
-
-    public function setImagePath($imagePath): void
-    {
-        $this->imagePath = $imagePath;
-    }
-
-    public function setMediaUrl(string $url): self
-    {
-        $this->mediaUrl = $url;
+        $this->image = $_ENV['MEDIA_URL'] . $image;
 
         return $this;
     }

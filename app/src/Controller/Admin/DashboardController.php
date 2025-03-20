@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Admin;
 use App\Entity\Article;
+use App\Entity\Banner;
 use App\Entity\Block;
 use App\Entity\ContactForm;
 use App\Entity\FeatureToggle;
@@ -67,6 +68,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Cron', 'fa fa-crown', CronJob::class);
         yield MenuItem::section('');
         yield MenuItem::linkToCrud('FeatureToggle', 'fa fa-toggle-on', FeatureToggle::class);
+        yield MenuItem::section('');
+        yield MenuItem::linkToCrud('Banner', 'fa fa-bullhorn', Banner::class);
         yield MenuItem::section('');
         yield MenuItem::section('Exit');
         yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');

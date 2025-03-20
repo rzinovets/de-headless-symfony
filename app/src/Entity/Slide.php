@@ -34,16 +34,11 @@ class Slide
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $title;
 
-    #[Assert\Url(message: 'Url is not valid')]
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $buttonUrl;
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $buttonTitle;
-
-    private $mediaUrl;
-
-    private $imagePath;
 
     public function getId(): ?int
     {
@@ -68,31 +63,16 @@ class Slide
         return $this;
     }
 
-    public function setImage($image = null): void
-    {
-        $this->image = $image;
-    }
-
-    public function getImage()
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setMediaUrl(string $url): self
+    public function setImage(string $image): self
     {
-        $this->mediaUrl = $url;
+        $this->image = $_ENV['MEDIA_URL'] . $image;
 
         return $this;
-    }
-
-    public function getImagePath(): string
-    {
-        return $this->mediaUrl.'/'.$this->getImage();
-    }
-
-    public function setImagePath($imagePath): void
-    {
-        $this->imagePath = $imagePath;
     }
 
     public function getDescription(): ?string

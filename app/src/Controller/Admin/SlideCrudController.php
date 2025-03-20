@@ -30,28 +30,16 @@ class SlideCrudController extends AbstractCrudController
 {
     protected ?int $entityIdRequest = null;
 
-    /**
-     * @param ManagerRegistry $registry
-     * @param AdminUrlGenerator $adminUrlGenerator
-     * @param Request $request
-     */
     public function __construct(
         private readonly ManagerRegistry $registry,
         private readonly AdminUrlGenerator $adminUrlGenerator,
         private readonly Request $request = new Request()
     ) {}
 
-    /**
-     * @return string
-     */
     public static function getEntityFqcn(): string {
         return Slide::class;
     }
 
-    /**
-     * @param string $pageName
-     * @return iterable
-     */
     public function configureFields(string $pageName): iterable {
         return [
             TextField::new('title'),
@@ -71,10 +59,6 @@ class SlideCrudController extends AbstractCrudController
         ];
     }
 
-    /**
-     * @param Actions $actions
-     * @return Actions
-     */
     public function configureActions(Actions $actions): Actions {
         $urlGenerator = $this->adminUrlGenerator
             ->setDashboard(DashboardController::class)
@@ -90,10 +74,6 @@ class SlideCrudController extends AbstractCrudController
             ->remove(Crud::PAGE_INDEX, Action::NEW);
     }
 
-    /**
-     * @param Filters $filters
-     * @return Filters
-     */
     public function configureFilters(Filters $filters): Filters {
         return $filters
             ->add('title')
@@ -101,27 +81,16 @@ class SlideCrudController extends AbstractCrudController
             ->add('image');
     }
 
-    /**
-     * @param AdminContext $context
-     * @return KeyValueStore|RedirectResponse|Response
-     */
     public function new(AdminContext $context): KeyValueStore|RedirectResponse|Response {
-        $this->entityIdRequest = $context->getRequest()->request->get('entitySliderId');
+        $this->entityIdRequest = $context->getRequest()->get('entitySliderId');
         return parent::new($context);
     }
 
-    /**
-     * @param AdminContext $context
-     * @return KeyValueStore|RedirectResponse|Response
-     */
     public function index(AdminContext $context): KeyValueStore|RedirectResponse|Response {
-        $this->entityIdRequest = $context->getRequest()->request->get('entitySliderId');
+        $this->entityIdRequest = $context->getRequest()->get('entitySliderId');
         return parent::index($context);
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function createSlide(): RedirectResponse {
         $urlGenerator = $this->adminUrlGenerator
             ->setController(SlideCrudController::class)
@@ -132,27 +101,20 @@ class SlideCrudController extends AbstractCrudController
         return $this->redirect($urlGenerator->generateUrl());
     }
 
-    /**
-     * @param string $entityFqcn
-     * @return mixed
-     */
     public function createEntity(string $entityFqcn) {
         $slide = new $entityFqcn();
         $sliderRepository = new SliderRepository($this->registry);
-        $slider = $sliderRepository->findBy(['id' => $this->entityIdRequest]);
-//        $slide->setSlider($slider[0]);
+        $slider = $sliderRepository->find($this->entityIdRequest);
+
+        if ($slider) {
+            $slide->setSlider($slider);
+        }
+
         $slide->setIsEnabled(true);
 
         return $slide;
     }
 
-    /**
-     * @param SearchDto $searchDto
-     * @param EntityDto $entityDto
-     * @param FieldCollection $fields
-     * @param FilterCollection $filters
-     * @return QueryBuilder
-     */
     public function createIndexQueryBuilder(
         SearchDto        $searchDto,
         EntityDto        $entityDto,
@@ -160,9 +122,13 @@ class SlideCrudController extends AbstractCrudController
         FilterCollection $filters
     ): QueryBuilder {
         $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
-        $filterValue = sprintf('%s.%s = :value', $queryBuilder->getAllAliases()[0], 'slider_id');
-        $queryBuilder->andWhere($filterValue)
-            ->setParameter('value', $this->entityIdRequest);
+
+        if ($this->entityIdRequest) {
+            $filterValue = sprintf('%s.%s = :value', $queryBuilder->getAllAliases()[0], 'slider_id');
+            $queryBuilder->andWhere($filterValue)
+                ->setParameter('value', $this->entityIdRequest);
+        }
+
         return $queryBuilder;
     }
 }

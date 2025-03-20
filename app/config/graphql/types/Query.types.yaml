@@ -74,5 +74,9 @@ Query:
             description: "Resolves using the identifier."
             type: "String"
         resolve: "@=resolver('BlockByIdentifier', [args])"
+      # Getting banners
+      banner:
+        type: "[Banner]"
+        resolve: '@=resolver("BannerCollection")'
 
 
