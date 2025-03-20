@@ -90,32 +90,42 @@ class ConfigLabelsController extends DashboardController
      * @param $configLabelsEntity
      * @return array
      */
-    private function createArrayOfOptions($configLabelsEntity): array
-    {
-        return array_reduce($configLabelsEntity->getOptions(), function ($options, $configOptionsEntity) {
-            $options[$configOptionsEntity->getId()] = $configOptionsEntity->getText();
-            return $options;
-        }, []);
+    public function createArrayOfOptions($configLabelsEntity): array {
+        $optionData = [];
+
+        foreach ($configLabelsEntity->getOptions() as $configOptionsEntity) {
+            $optionId = $configOptionsEntity->getId();
+            $optionData[$optionId] = $configOptionsEntity->getText();
+        }
+        return $optionData;
     }
 
     /**
      * @param $configGroupEntity
      * @return array
      */
-    private function createArrayLabelData($configGroupEntity): array
-    {
+    public function createArrayLabelData($configGroupEntity): array {
         $valueCollection = $this->valueRepository->findAll();
-        $configArrayOfValues = array_column(
-            array_map(fn($value) => [$value->getCode() => $value->getValue()], $valueCollection),
-            null
-        );
 
-        return array_map(fn($configLabelsEntity) => [
-            'option_data' => $this->createArrayOfOptions($configLabelsEntity),
-            'label' => $configLabelsEntity->getLabel(),
-            'code' => $configLabelsEntity->getCode(),
-            'type' => $configLabelsEntity->getType(),
-            'value' => $configArrayOfValues[$configGroupEntity->getCode() . '/' . $configLabelsEntity->getCode()] ?? '',
-        ], $configGroupEntity->getLabels());
+        $labelData = [];
+        $configArrayOfValues = [];
+
+        foreach ($valueCollection as $value) {
+            $configArrayOfValues[$value->getCode()] = $value->getValue();
+        }
+
+        foreach ($configGroupEntity->getLabels() as $configLabelsEntity) {
+            $codeValue = $configGroupEntity->getCode() . '/' . $configLabelsEntity->getCode();
+            $optionData = $this->createArrayOfOptions($configLabelsEntity);
+            $labelCode = $configLabelsEntity->getCode();
+            $labelData[$labelCode] = [
+                'option_data' => $optionData,
+                'label' => $configLabelsEntity->getLabel(),
+                'code' => $configLabelsEntity->getCode(),
+                'type' => $configLabelsEntity->getType(),
+                'value' => $configArrayOfValues[$configLabelsEntity->getCode()] ?? ''
+            ];
+        }
+        return $labelData;
     }
 }
