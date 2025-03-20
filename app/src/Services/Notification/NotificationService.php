@@ -2,8 +2,10 @@
 
 namespace App\Services\Notification;
 
+use App\Services\Notification\Notifications\EmailNotification;
 use App\Services\Notification\Notifications\NotificationInterface;
 use App\Services\Notification\Notifications\TelegramNotification;
+use App\Services\Notification\Providers\EmailProvider;
 use App\Services\Notification\Providers\ProviderInterface;
 use App\Services\Notification\Providers\TelegramProvider;
 use Exception;
@@ -15,11 +17,13 @@ readonly class NotificationService
 {
     /**
      * @param TelegramProvider $telegramProvider
+     * @param EmailProvider $emailProvider
      * @param Environment $twig
      * @param LoggerInterface $logger
      */
     public function __construct(
         private TelegramProvider $telegramProvider,
+        private EmailProvider $emailProvider,
         private Environment $twig,
         private LoggerInterface $logger
     ) {}
@@ -74,6 +78,7 @@ readonly class NotificationService
     {
         return match (true) {
             $notification instanceof TelegramNotification => $this->telegramProvider,
+            $notification instanceof EmailNotification => $this->emailProvider,
             default => throw new Exception('Unknown notification provider'),
         };
     }
