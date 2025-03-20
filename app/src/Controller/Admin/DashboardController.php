@@ -6,6 +6,7 @@ use App\Entity\Admin;
 use App\Entity\Article;
 use App\Entity\Block;
 use App\Entity\ContactForm;
+use App\Entity\FeatureToggle;
 use App\Entity\Footer;
 use App\Entity\Menu;
 use App\Entity\Slider;
@@ -64,6 +65,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Contact Form', 'fa fa-address-book', ContactForm::class);
         yield MenuItem::section('');
         yield MenuItem::linkToCrud('Cron', 'fa fa-crown', CronJob::class);
+        yield MenuItem::section('');
+        yield MenuItem::linkToCrud('FeatureToggle', 'fa fa-toggle-on', FeatureToggle::class);
         yield MenuItem::section('');
         yield MenuItem::section('Exit');
         yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
