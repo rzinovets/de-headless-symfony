@@ -32,7 +32,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard {
         return Dashboard::new()
             ->setTitle('Custom CMS')
-            ->setFaviconPath('favicon.svg')
+            ->setFaviconPath('media/admin/admin.svg')
             ->setTextDirection('ltr')
             ->setLocales([
                 'en' => '🇬🇧 English',
@@ -46,9 +46,9 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::section('');
-        yield MenuItem::linkToCrud('User', 'fa fa-user-circle-o', User::class);
+        yield MenuItem::linkToCrud('Users', 'fa fa-user-circle-o', User::class);
         yield MenuItem::section('');
-        yield MenuItem::linkToCrud('Admin', 'fa fa-user-o', Admin::class);
+        yield MenuItem::linkToCrud('Admin users', 'fa fa-user-o', Admin::class);
         yield MenuItem::section('');
         yield MenuItem::linkToCrud('Menu', 'fa fa-list', Menu::class);
         yield MenuItem::section('');
@@ -71,7 +71,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('');
         yield MenuItem::linkToCrud('Banner', 'fa fa-bullhorn', Banner::class);
         yield MenuItem::section('');
-        yield MenuItem::section('Exit');
-        yield MenuItem::linkToLogout('Logout', 'fa fa-sign-out');
     }
 }
