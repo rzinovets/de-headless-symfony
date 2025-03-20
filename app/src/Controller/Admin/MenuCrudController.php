@@ -83,7 +83,7 @@ class MenuCrudController extends AbstractCrudController
             $label = $prefix . $menu['title'];
             $options[$label] = $id;
             if (!empty($menu['children'])) {
-                $this->flattenMenuTree($menu['children'], $options, $prefix . ' > ');
+                $this->flattenMenuTree($menu['children'], $options, $prefix . $menu['title'] . '/');
             }
         }
     }
