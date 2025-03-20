@@ -30,25 +30,9 @@ class SliderResolver implements QueryInterface, AliasedInterface
      * @return Slider|null
      */
     public function resolveBySliderKey(Argument $args): ?Slider {
-        $slide = $this->sliderRepository->findOneBy([
+        return $this->sliderRepository->findOneBy([
             'slider_key' => $args['slider_key']
         ]);
-
-        $request = Request::createFromGlobals();
-
-        $imageUrl = $request->getUriForPath('/media');
-
-        $slide->setMediaUrl($imageUrl);
-
-        $slides = $slide->getSlides();
-
-        foreach ($slides as $slideEntity) {
-            $imagePath = $slideEntity->getImagePath();
-
-            $slideEntity->setImagePath($imagePath);
-        }
-
-        return $slide;
     }
 
     /**

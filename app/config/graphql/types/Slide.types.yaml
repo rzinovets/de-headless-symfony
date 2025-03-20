@@ -19,5 +19,3 @@ Slide:
         type: "String"
       button_title:
         type: "String"
-      imagePath:
-        type: "String"

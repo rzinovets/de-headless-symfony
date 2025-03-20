@@ -73,4 +73,6 @@ To test GraphQL queries or check documentation, navigate to:
 
 ---
 
+![Admin](docs/overview/admin_page.png)
+
 📌 _Happy coding! 🚀_

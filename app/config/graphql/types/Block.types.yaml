@@ -14,5 +14,3 @@ Block:
         type: "Boolean"
       image:
         type: "String"
-      imagePath:
-        type: "String"

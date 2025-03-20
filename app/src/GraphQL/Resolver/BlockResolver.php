@@ -30,19 +30,11 @@ class BlockResolver implements QueryInterface, AliasedInterface
      * @return Block|null
      */
     public function resolveByIdentifier(Argument $args): ?Block {
-        $block = $this->blockRepository->findOneBy(
+        return $this->blockRepository->findOneBy(
             [
                 'identifier' => $args['identifier']
             ]
         );
-
-        $request = Request::createFromGlobals();
-
-        $imageUrl = $request->getUriForPath('/media');
-
-        $block->setMediaUrl($imageUrl);
-
-        return $block;
     }
 
     /**

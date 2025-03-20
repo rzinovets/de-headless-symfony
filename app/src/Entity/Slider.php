@@ -59,19 +59,8 @@ class Slider
         return $this;
     }
 
-    public function setMediaUrl(string $url): self
-    {
-        $this->mediaUrl = $url;
-
-        return $this;
-    }
-
     public function getSlides(): Collection
     {
-        foreach ($this->slides as $slide) {
-            $slide->setMediaUrl($this->mediaUrl);
-        }
-
         return $this->slides;
     }
 
