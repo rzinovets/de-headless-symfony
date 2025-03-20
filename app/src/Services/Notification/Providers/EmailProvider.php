@@ -26,10 +26,8 @@ class EmailProvider implements ProviderInterface
         private LoggerInterface $logger,
         private string $template,
         private string $emailFrom,
-        private string $from = '',
         private bool $isActive = false
     ) {
-        $this->from = str_replace('\'', '', $from);
     }
 
     /**

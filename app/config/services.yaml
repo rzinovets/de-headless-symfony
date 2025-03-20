@@ -46,3 +46,9 @@ services:
     App\EventListener\ContactFormListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist, entity: App\Entity\ContactForm }
+    App\Services\Notification\Providers\EmailProvider:
+        public: false
+        arguments:
+            $template: '/emailConfirm/confirm.html.twig'
+            $isActive: '%env(bool:EMAIL_SERVICE_IS_ACTIVE)%'
+            $emailFrom: '%env(EMAIL_FROM)%'
