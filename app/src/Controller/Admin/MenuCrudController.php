@@ -13,7 +13,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
 class MenuCrudController extends AbstractCrudController
 {
@@ -56,7 +55,7 @@ class MenuCrudController extends AbstractCrudController
             ChoiceField::new(self::PARENT_ID_KEY, 'Sub menu')->setChoices(
                 $this->buildMenuOptions($this->createMenuTreeStructure())
             ),
-            UrlField::new('url')
+            TextField::new('url')
         ];
     }
 

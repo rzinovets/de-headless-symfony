@@ -16,7 +16,6 @@ class Article
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Assert\Url(message: 'url key is not valid')]
     #[ORM\Column(length: 255, unique: true)]
     private ?string $url_key = null;
 

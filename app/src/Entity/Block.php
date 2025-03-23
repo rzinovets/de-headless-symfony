@@ -29,6 +29,9 @@ class Block
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
+    #[ORM\ManyToOne(inversedBy: 'blocks')]
+    private ?Page $page = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,5 +95,22 @@ class Block
         $this->image = $_ENV['MEDIA_URL'] . $image;
 
         return $this;
+    }
+
+    public function getPage(): ?Page
+    {
+        return $this->page;
+    }
+
+    public function setPage(?Page $page): static
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getTitle();
     }
 }
