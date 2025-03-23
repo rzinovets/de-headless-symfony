@@ -1,0 +1,20 @@
+Chat:
+  type: object
+  config:
+    description: "Chat between user and admin"
+    fields:
+      id:
+        type: "Int!"
+        description: "The unique ID of the chat."
+      user:
+        type: "User!"
+        description: "The user participating in the chat."
+      admin:
+        type: "User!"
+        description: "The admin participating in the chat."
+      createdAt:
+        type: "DateTime!"
+        description: "The date and time when the chat was created."
+      messages:
+        type: "[Message!]!"
+        description: "Messages in the chat."

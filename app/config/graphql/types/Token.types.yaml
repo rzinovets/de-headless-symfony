@@ -1,0 +1,12 @@
+Token:
+  type: object
+  config:
+    fields:
+      id:
+        type: "Int!"
+      token:
+        type: "String!"
+      expiredTime:
+        type: "Int!"
+      user:
+        type: "User!"

@@ -1,0 +1,43 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}Chat Messages{% endblock %}
+
+{% block main %}
+    <link rel="stylesheet" href="/styles/message/message.css">
+
+    <div class="chat-container bg-dark text-light p-4 rounded">
+        <div class="chat-header mb-4">
+            <h3 class="text-center">Chat between {{ chat.user.username }} and {{ chat.admin.username }}</h3>
+        </div>
+        <div class="chat-messages mb-4" id="chat-messages" style="max-height: 60vh; overflow-y: auto;">
+            {% for message in messages %}
+                <div class="message mb-3 {% if message.sender.id == chat.admin.id %}admin-message{% else %}user-message{% endif %}">
+                    <div class="message-bubble p-3 rounded">
+                        <div class="message-sender small mb-2">
+                            <strong>{{ message.sender.username }}</strong> <span class="text-muted">{{ message.createdAt|date('H:i') }}</span>
+                        </div>
+                        <div class="message-content">
+                            {{ message.content }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="chat-input">
+            <form action="{{ path('admin', {
+                crudAction: 'sendMessage',
+                crudControllerFqcn: 'App\\Controller\\Admin\\ChatCrudController',
+                entityId: chat.id
+            }) }}" method="post" class="d-flex">
+                <textarea name="message" placeholder="Type your message..." class="form-control me-2 bg-dark text-light" style="resize: none;" required></textarea>
+                <input type="hidden" name="chatId" value="{{ chat.id }}">
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chat-messages');
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    </script>
+{% endblock %}

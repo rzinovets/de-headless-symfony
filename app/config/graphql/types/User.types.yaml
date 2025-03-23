@@ -1,0 +1,30 @@
+User:
+  type: object
+  config:
+    fields:
+      id:
+        type: "Int!"
+      username:
+        type: "String!"
+      email:
+        type: "String!"
+      roles:
+        type: "[String!]!"
+      fullName:
+        type: "String"
+      dateOfBirth:
+        type: "DateTime"
+      gender:
+        type: "String"
+      phoneNumber:
+        type: "String"
+      streetAddressLine1:
+        type: "String"
+      streetAddressLine2:
+        type: "String"
+      city:
+        type: "String"
+      postCode:
+        type: "String"
+      disabilities:
+        type: "String"

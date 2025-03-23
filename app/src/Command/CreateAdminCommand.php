@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Entity\Admin;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
@@ -23,11 +23,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 )]
 class CreateAdminCommand extends Command
 {
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param UserPasswordHasherInterface $passwordHasher
-     * @param LoggerInterface $logger
-     */
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly UserPasswordHasherInterface $passwordHasher,
@@ -36,21 +31,14 @@ class CreateAdminCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * @return void
-     */
     protected function configure(): void
     {
         $this
             ->addArgument('username', InputArgument::OPTIONAL, 'The username of the admin.')
+            ->addArgument('email', InputArgument::OPTIONAL, 'The email of the admin.')
             ->addArgument('password', InputArgument::OPTIONAL, 'The password of the admin.');
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -61,9 +49,18 @@ class CreateAdminCommand extends Command
         $username = $input->getArgument('username') ?? $io->ask('🖋️ Enter the username', null, static fn(string $value) =>
         trim($value) !== '' ? $value : throw new RuntimeException('⛔ Username cannot be empty.'));
 
-        $existingUser = $this->entityManager->getRepository(Admin::class)->findOneBy(['username' => $username]);
+        $email = $input->getArgument('email') ?? $io->ask('📧 Enter the email', null, static fn(string $value) =>
+        filter_var($value, FILTER_VALIDATE_EMAIL) ? $value : throw new RuntimeException('⛔ Invalid email address.'));
+
+        $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $username]);
         if ($existingUser) {
             $io->error('❌ User with this username already exists.');
+            return Command::FAILURE;
+        }
+
+        $existingEmail = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+        if ($existingEmail) {
+            $io->error('❌ User with this email already exists.');
             return Command::FAILURE;
         }
 
@@ -74,8 +71,9 @@ class CreateAdminCommand extends Command
                 strlen($value) >= 8 ? $value : throw new RuntimeException('⛔ Password must be at least 8 characters long.'))
         );
 
-        $admin = (new Admin())
+        $admin = (new User())
             ->setUsername($username)
+            ->setEmail($email)
             ->setRoles(['ROLE_ADMIN']);
 
         $hashedPassword = $this->passwordHasher->hashPassword($admin, $password);

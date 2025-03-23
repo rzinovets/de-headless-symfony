@@ -9,41 +9,33 @@ use Doctrine\ORM\Mapping as ORM;
 class Token
 {
     #[ORM\Id]
-    #[ORM\Column(name: "account_id", type: "integer")]
-    #[ORM\GeneratedValue(strategy: "AUTO")]
-    #[ORM\OneToOne(inversedBy: "Token", targetEntity: "Account")]
-    #[ORM\JoinColumn(name: "account_id", referencedColumnName: "id")]
-    private ?int $account_id = null;
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $account = null;
+    private ?User $user = null;
 
     #[ORM\Column(length: 255)]
     private ?string $token = null;
 
     #[ORM\Column]
-    private ?int $expired_time = null;
+    private ?int $expiredTime = null;
 
     public function getId(): ?int
     {
-        return $this->account_id;
+        return $this->id;
     }
 
-    public function getAccountId(): ?int
+    public function getUser(): ?User
     {
-        return $this->account_id;
+        return $this->user;
     }
 
-    public function getAccount(): ?User
+    public function setUser(?User $user): self
     {
-        return $this->account;
-    }
-
-    public function setAccount(User $account): self
-    {
-        $this->account = $account;
-
+        $this->user = $user;
         return $this;
     }
 
@@ -55,19 +47,17 @@ class Token
     public function setToken(string $token): self
     {
         $this->token = $token;
-
         return $this;
     }
 
     public function getExpiredTime(): ?int
     {
-        return $this->expired_time;
+        return $this->expiredTime;
     }
 
-    public function setExpiredTime(int $expired_time): self
+    public function setExpiredTime(int $expiredTime): self
     {
-        $this->expired_time = $expired_time;
-
+        $this->expiredTime = $expiredTime;
         return $this;
     }
 }

@@ -3,7 +3,7 @@ Mutation:
   config:
     fields:
       CreateAccount:
-        type: CreateAccountPayload!
+        type: User!
         resolve: "@=mutation('create_account', args['input'])"
         args:
           input:
@@ -20,78 +20,57 @@ Mutation:
         args:
           input:
             type: CreateContactFormInput!
-CreateAccountPayload:
-  type: object
-  config:
-    fields:
-      id:
-        type: "Int!"
-      full_name:
-        type: "String"
-      date_of_birth:
-        type: "DateTime"
-      gender:
-        type: "String"
-      email:
-        type: "String"
-      phone_number:
-        type: "Int"
-      street_address_line1:
-        type: "String"
-      street_address_line2:
-        type: "String"
-      city:
-        type: "String"
-      post_code:
-        type: "String"
-      disabilities:
-        type: "String"
+      CreateChat:
+        type: Chat!
+        resolve: "@=mutation('create_chat', args['input'])"
+        args:
+          input:
+            type: CreateChatInput!
+      SendMessage:
+        type: Message!
+        resolve: "@=mutation('send_message', args['input'])"
+        args:
+          input:
+            type: SendMessageInput!
+
 CreateAccountInput:
   type: input-object
   config:
     fields:
-      account_id:
-        type: "Int"
-      full_name:
+      email:
+        type: "String!"
+      username:
         type: "String"
-      date_of_birth:
+      password:
+        type: "String!"
+      fullName:
+        type: "String"
+      dateOfBirth:
         type: "DateTime"
       gender:
         type: "String"
-      email:
+      phoneNumber:
         type: "String"
-      phone_number:
-        type: "Int"
-      street_address_line1:
+      streetAddressLine1:
         type: "String"
-      street_address_line2:
+      streetAddressLine2:
         type: "String"
       city:
         type: "String"
-      post_code:
+      postCode:
         type: "String"
       disabilities:
         type: "String"
-      password:
-        type: "String"
-Token:
-  type: object
-  config:
-    fields:
-      id:
-        type: "Int"
-      token:
-        type: "String"
-      life_time:
-        type: "Int"
+
 LoginAccountInput:
   type: input-object
   config:
     fields:
       email:
-        type: "String"
+        type: "String!"
       password:
-        type: "String"
+        type: "String!"
+
 CreateContactFormInput:
   type: input-object
   config:
@@ -103,4 +82,24 @@ CreateContactFormInput:
       subject:
         type: "String!"
       message:
+        type: "String!"
+
+CreateChatInput:
+  type: input-object
+  config:
+    fields:
+      userId:
+        type: "Int!"
+      adminId:
+        type: "Int!"
+
+SendMessageInput:
+  type: input-object
+  config:
+    fields:
+      chatId:
+        type: "Int!"
+      senderId:
+        type: "Int!"
+      content:
         type: "String!"

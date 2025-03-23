@@ -2,10 +2,10 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Admin;
 use App\Entity\Article;
 use App\Entity\Banner;
 use App\Entity\Block;
+use App\Entity\Chat;
 use App\Entity\ConfigGroups;
 use App\Entity\ConfigLabels;
 use App\Entity\ConfigOptions;
@@ -61,7 +61,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::section('User Management');
         yield MenuItem::linkToCrud('Users', 'fa fa-user-circle-o', User::class);
-        yield MenuItem::linkToCrud('Admin Users', 'fa fa-user-o', Admin::class);
+        yield MenuItem::section('Support');
+        yield MenuItem::linkToCrud('Chats', 'fa fa-comments', Chat::class);
 
         yield MenuItem::section('Content Management');
         yield MenuItem::linkToCrud('Menu', 'fa fa-list', Menu::class);

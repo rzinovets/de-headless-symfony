@@ -1,0 +1,20 @@
+Message:
+  type: object
+  config:
+    description: "A message in a chat"
+    fields:
+      id:
+        type: "Int!"
+        description: "The unique ID of the message."
+      chat:
+        type: "Chat!"
+        description: "The chat this message belongs to."
+      sender:
+        type: "User!"
+        description: "The user who sent the message."
+      content:
+        type: "String!"
+        description: "The content of the message."
+      createdAt:
+        type: "DateTime!"
+        description: "The date and time when the message was sent."

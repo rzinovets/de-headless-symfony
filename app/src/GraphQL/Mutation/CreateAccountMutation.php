@@ -2,54 +2,49 @@
 
 namespace App\GraphQL\Mutation;
 
-use App\Entity\DataObject;
 use App\Entity\User;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\EntityManagerInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class CreateAccountMutation implements MutationInterface, AliasedInterface
+final readonly class CreateAccountMutation implements MutationInterface, AliasedInterface
 {
-    /**
-     * @var EntityManager
-     */
-    private EntityManager $em;
+    public function __construct(
+        private EntityManagerInterface      $em,
+        private UserPasswordHasherInterface $passwordHasher
+    ) {}
 
-    /**
-     * @param EntityManager $em
-     */
-    public function __construct(EntityManager $em) {
-        $this->em = $em;
+    public function createAccount(array $input): User
+    {
+        $user = new User();
+        $user->setEmail($input['email']);
+
+        $user->setUsername($input['username'] ?? null)
+            ->setFullName($input['fullName'] ?? null)
+            ->setDateOfBirth($input['dateOfBirth'] ?? null)
+            ->setGender($input['gender'] ?? null)
+            ->setPhoneNumber($input['phoneNumber'] ?? null)
+            ->setStreetAddressLine1($input['streetAddressLine1'] ?? null)
+            ->setStreetAddressLine2($input['streetAddressLine2'] ?? null)
+            ->setCity($input['city'] ?? null)
+            ->setPostCode($input['postCode'] ?? null)
+            ->setDisabilities($input['disabilities'] ?? null);
+
+        $user->setPassword(
+            $this->passwordHasher->hashPassword($user, $input['password'])
+        );
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $user;
     }
 
-    /**
-     * @param array $args
-     * @return User
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function createAccount(array $args): User {
-        $newAccount = new User();
-        $recivedParameters = new DataObject($args);
-
-        if (!isset($recivedParameters->id)) {
-            $newAccount->setEmail($recivedParameters->email);
-            $newAccount->setPassword($recivedParameters->password);
-            $this->em->persist($newAccount);
-            $this->em->flush();
-        }
-
-        return $newAccount;
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array {
+    public static function getAliases(): array
+    {
         return [
-            'createAccount' => 'create_account'
+            'createAccount' => 'create_account',
         ];
     }
 }
