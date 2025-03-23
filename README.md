@@ -72,7 +72,7 @@ To test GraphQL queries or check documentation, navigate to:
 [http://localhost/graphiql](http://localhost/graphiql)
 
 ---
-
+## 👀 Overview
 ![Admin](docs/overview/admin_page.png)
 
 📌 _Happy coding! 🚀_
