@@ -15,7 +15,7 @@ class ConfigLabels
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $group_id = null;
+    private ?int $groupId = null;
 
     #[ORM\Column(length: 255)]
     private ?string $code = null;
@@ -27,7 +27,7 @@ class ConfigLabels
     private ?string $type = null;
 
     #[ORM\Column(type: 'boolean')]
-    private ?string $is_secure = null;
+    private ?string $isSecure = null;
 
     #[ORM\OneToMany(mappedBy: "labels", targetEntity: "ConfigOptions")]
     private $options;
@@ -48,12 +48,12 @@ class ConfigLabels
 
     public function getGroupId(): ?int
     {
-        return $this->group_id;
+        return $this->groupId;
     }
 
-    public function setGroupId(int $group_id): self
+    public function setGroupId(int $groupId): self
     {
-        $this->group_id = $group_id;
+        $this->groupId = $groupId;
 
         return $this;
     }
@@ -108,12 +108,12 @@ class ConfigLabels
 
     public function getIsSecure(): ?bool
     {
-        return $this->is_secure;
+        return $this->isSecure;
     }
 
-    public function setIsSecure(bool $is_secure): self
+    public function setIsSecure(bool $isSecure): self
     {
-        $this->is_secure = $is_secure;
+        $this->isSecure = $isSecure;
 
         return $this;
     }

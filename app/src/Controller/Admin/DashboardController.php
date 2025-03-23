@@ -6,6 +6,10 @@ use App\Entity\Admin;
 use App\Entity\Article;
 use App\Entity\Banner;
 use App\Entity\Block;
+use App\Entity\ConfigGroups;
+use App\Entity\ConfigLabels;
+use App\Entity\ConfigOptions;
+use App\Entity\ConfigValues;
 use App\Entity\ContactForm;
 use App\Entity\FeatureToggle;
 use App\Entity\Footer;
@@ -60,6 +64,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('');
         yield MenuItem::linkToRoute('Configuration', 'fa fa-diamond', 'admin_config')
             ->setPermission('ROLE_ADMIN');
+        yield MenuItem::section('');
+        yield MenuItem::subMenu('Create Configuration', 'fa fa-cog')->setSubItems([
+            MenuItem::linkToCrud('ConfigGroups', 'fa fa-object-group', ConfigGroups::class),
+            MenuItem::linkToCrud('ConfigLabels', 'fa fa-tags', ConfigLabels::class),
+            MenuItem::linkToCrud('ConfigValues', 'fa fa-list-ol', ConfigValues::class),
+            MenuItem::linkToCrud('ConfigOptions', 'fa fa-sliders-h', ConfigOptions::class),
+        ]);
         yield MenuItem::section('');
         yield MenuItem::linkToCrud('Blocks', 'fa fa-picture-o', Block::class);
         yield MenuItem::section('');
