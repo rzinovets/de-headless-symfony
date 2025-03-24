@@ -66,3 +66,9 @@ Query:
       banner:
         type: "[Banner]"
         resolve: '@=resolver("BannerCollection")'
+      chat:
+        type: "Chat"
+        args:
+          token:
+            type: "String!"
+        resolve: "@=query('Chat', args)"

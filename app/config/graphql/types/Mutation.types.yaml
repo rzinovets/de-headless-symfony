@@ -14,12 +14,6 @@ Mutation:
         args:
           input:
             type: LoginAccountInput!
-      CreateContactForm:
-        type: ContactForm!
-        resolve: "@=mutation('create_contact_form', args['input'])"
-        args:
-          input:
-            type: CreateContactFormInput!
       CreateChat:
         type: Chat!
         resolve: "@=mutation('create_chat', args['input'])"
@@ -32,6 +26,13 @@ Mutation:
         args:
           input:
             type: SendMessageInput!
+
+CreateChatInput:
+  type: input-object
+  config:
+    fields:
+      token:
+        type: "String!"
 
 CreateAccountInput:
   type: input-object
@@ -84,22 +85,11 @@ CreateContactFormInput:
       message:
         type: "String!"
 
-CreateChatInput:
-  type: input-object
-  config:
-    fields:
-      userId:
-        type: "Int!"
-      adminId:
-        type: "Int!"
-
 SendMessageInput:
   type: input-object
   config:
     fields:
-      chatId:
-        type: "Int!"
-      senderId:
-        type: "Int!"
+      token:
+        type: "String!"
       content:
         type: "String!"

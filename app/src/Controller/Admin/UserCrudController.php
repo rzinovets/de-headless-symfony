@@ -44,10 +44,6 @@ class UserCrudController extends AbstractCrudController
                 ])
                 ->allowMultipleChoices()
                 ->renderExpanded(),
-            TextField::new('password')
-                ->setFormType(PasswordType::class)
-                ->onlyOnForms()
-                ->setRequired($pageName === Crud::PAGE_NEW),
             DateTimeField::new('createdAt')->hideOnForm(),
             DateTimeField::new('updatedAt')->hideOnForm(),
         ];
