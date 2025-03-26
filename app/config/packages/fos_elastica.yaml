@@ -1,0 +1,18 @@
+fos_elastica:
+  clients:
+    default: { host: '%env(ELASTICSEARCH_HOST)%', port: '%env(ELASTICSEARCH_PORT)%' }
+  indexes:
+    app_faq:
+      properties:
+        question:
+          type: text
+        answer:
+          type: text
+        priority:
+          type: integer
+      persistence:
+        driver: orm
+        model: App\Entity\FAQ
+        provider: ~
+        finder: ~
+        listener: ~

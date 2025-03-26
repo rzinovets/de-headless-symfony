@@ -44,6 +44,11 @@ services:
         class: App\GraphQL\Resolver\BannerResolver
         tags:
             - { name: overblog_graphql.resolver }
+    App\GraphQL\Resolver\SearchResolver:
+        arguments:
+            $faqFinder: '@fos_elastica.finder.app_faq'
+        tags:
+            - { name: overblog_graphql.resolver, alias: 'search_faq' }
     TelegramBot\Api\BotApi:
         arguments:
             $token: '%env(TELEGRAM_BOT_API_TOKEN)%'

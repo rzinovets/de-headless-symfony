@@ -72,3 +72,9 @@ Query:
           token:
             type: "String!"
         resolve: "@=query('Chat', args)"
+      searchFAQ:
+        type: "[FAQ]"
+        args:
+          query: { type: "String!" }
+          limit: { type: "Int" }
+        resolve: "@=query('FAQSearch', args)"

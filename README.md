@@ -1,4 +1,4 @@
-# Custom CMS based on Symfony
+# Custom CMS
 
 ![Symfony](https://img.shields.io/badge/Symfony-6.4-blue.svg?style=flat-square)
 ![PHP](https://img.shields.io/badge/PHP-8.3-blue.svg?style=flat-square)

@@ -1,0 +1,8 @@
+FAQ:
+  type: object
+  config:
+    fields:
+      id: { type: "Int!" }
+      question: { type: "String!" }
+      answer: { type: "String!" }
+      priority: { type: "Int" }

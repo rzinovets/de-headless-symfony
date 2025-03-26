@@ -10,9 +10,13 @@
         "cron/cron-bundle": "*",
         "doctrine/annotations": "^2.0",
         "doctrine/doctrine-bundle": "^2.8",
+        "doctrine/doctrine-fixtures-bundle": "^4.0",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
         "easycorp/easyadmin-bundle": "^4.5",
+        "elasticsearch/elasticsearch": "^7.17",
+        "fakerphp/faker": "^1.24",
+        "friendsofsymfony/elastica-bundle": "^6.6",
         "nikic/php-parser": "^5.4",
         "overblog/graphql-bundle": "^0.15.2",
         "symfony/asset": "^6.4",
@@ -83,8 +87,6 @@
         }
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "*",
-        "fakerphp/faker": "*",
         "overblog/graphiql-bundle": "^0.3.0",
         "symfony/debug-bundle": "^6.4",
         "symfony/maker-bundle": "*"
