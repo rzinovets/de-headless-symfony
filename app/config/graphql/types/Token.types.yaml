@@ -1,12 +1,17 @@
 Token:
   type: object
   config:
+    description: "Authentication token for API access"
     fields:
       id:
         type: "Int!"
+        description: "Unique token identifier"
       token:
         type: "String!"
+        description: "JWT authentication string"
       expiredTime:
         type: "Int!"
+        description: "Expiration timestamp (Unix epoch)"
       user:
         type: "User!"
+        description: "Associated user account"

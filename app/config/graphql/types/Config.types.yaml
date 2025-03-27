@@ -1,11 +1,11 @@
 Config:
   type: object
   config:
-    description: "Config"
+    description: "System configuration key-value pair"
     fields:
       code:
         type: "String"
-        description: "The key of config value"
+        description: "Unique configuration key (e.g., 'maintenance-mode')"
       value:
         type: "String"
-        description: "Value config"
+        description: "Configuration value in string format"

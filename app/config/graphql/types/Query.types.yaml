@@ -1,80 +1,122 @@
 Query:
   type: object
   config:
-    description: "User ORM repository"
+    description: "Root query type that provides access to all read operations in the system"
     fields:
       user:
         type: "User"
+        description: "Retrieves a single user by their unique ID"
         args:
           id:
-            description: "Resolves using the user id."
+            description: "The unique numeric identifier of the user"
             type: "Int"
         resolve: "@=resolver('User', [args])"
+
       users:
         type: "[User]"
+        description: "Retrieves a list of all users in the system"
         resolve: '@=resolver("UserCollection")'
+
       config:
         type: "Config"
+        description: "Gets a configuration value by its unique code"
         args:
           code:
-            description: "Resolves using the config code."
+            description: "The string key that identifies the configuration entry"
             type: "String"
         resolve: "@=resolver('Config', [args])"
+
       menu:
         type: "[Menu]"
+        description: "Retrieves the complete navigation menu structure"
         resolve: '@=resolver("Menu")'
+
       article:
         type: "Article"
+        description: "Fetches a single article by its database ID"
         args:
           id:
-            description: "Resolves using the article id."
+            description: "The unique numeric identifier of the article"
             type: "Int"
         resolve: "@=resolver('Article', [args])"
+
       articleByKey:
         type: "Article"
+        description: "Finds an article by its URL-friendly key (slug)"
         args:
           url_key:
-            description: "Resolves using the article url key."
+            description: "The human-readable URL identifier of the article"
             type: "String"
         resolve: "@=resolver('ArticleByKey', [args])"
+
       articles:
         type: "[Article]"
+        description: "Retrieves a paginated list of articles, ordered by newest first"
         args:
           limit:
+            description: "Maximum number of articles to return (default: 10)"
             type: "Int"
         resolve: "@=resolver('ArticleCollection', [args])"
+
       footer:
         type: "[Footer]"
+        description: "Gets all footer sections with their content links"
         resolve: '@=resolver("FooterCollection")'
+
       sliders:
         type: "[Slider]"
+        description: "Retrieves all available sliders with their slides"
         resolve: '@=resolver("SliderCollection")'
+
       sliderByKey:
         type: "Slider"
+        description: "Finds a specific slider by its unique key identifier"
         args:
           slider_key:
-            description: "Resolves using the slider key."
+            description: "The string identifier of the slider (e.g., 'homepage-main')"
             type: "String"
         resolve: "@=resolver('SliderByKey', [args])"
+
       block:
         type: "Block"
+        description: "Retrieves a content block by its CMS identifier"
         args:
           identifier:
-            description: "Resolves using the identifier."
+            description: "The block's unique string identifier (e.g., 'about-us')"
             type: "String"
         resolve: "@=resolver('BlockByIdentifier', [args])"
+
       banner:
         type: "[Banner]"
+        description: "Gets all active banners for display"
         resolve: '@=resolver("BannerCollection")'
+
       chat:
         type: "Chat"
+        description: "Initializes a chat session with the provided authentication token"
         args:
           token:
+            description: "JWT authentication token for the chat session"
             type: "String!"
         resolve: "@=query('Chat', args)"
+
       searchFAQ:
         type: "[FAQ]"
+        description: "Searches through FAQ entries with full-text search"
         args:
-          query: { type: "String!" }
-          limit: { type: "Int" }
+          query:
+            description: "Search query string"
+            type: "String!"
+          limit:
+            description: "Maximum number of results to return (default: 10)"
+            type: "Int"
         resolve: "@=query('FAQSearch', args)"
+
+      featureToggle:
+        type: "FeatureToggle"
+        description: "Checks the status of a feature flag by its code"
+        args:
+          code:
+            description: "The unique feature flag identifier (e.g., 'new-checkout-flow')"
+            type: "String!"
+        resolve: "@=resolver('FeatureToggle', [args])"

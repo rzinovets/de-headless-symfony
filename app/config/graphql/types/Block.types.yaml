@@ -1,16 +1,23 @@
 Block:
   type: object
   config:
+    description: "CMS content block with HTML content and display controls"
     fields:
       id:
         type: "Int!"
+        description: "Unique block identifier"
       title:
         type: "String"
+        description: "Administrative title for CMS"
       identifier:
         type: "String"
+        description: "Unique string identifier (e.g., 'about-us-block')"
       content:
         type: "String"
+        description: "HTML content of the block"
       is_active:
         type: "Boolean"
+        description: "Whether the block should be rendered"
       image:
         type: "String"
+        description: "Optional associated image URL"

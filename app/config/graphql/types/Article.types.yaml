@@ -1,18 +1,26 @@
 Article:
   type: object
   config:
+    description: "A content article with title, description, and publishing metadata"
     fields:
       id:
         type: "Int"
+        description: "Unique identifier for the article"
       title:
         type: "String"
+        description: "Main headline of the article (max 255 characters)"
       short_description:
         type: "String"
+        description: "Brief summary for previews (max 500 characters)"
       description:
         type: "String"
+        description: "Full article content in HTML format"
       is_enabled:
         type: "Boolean"
+        description: "Whether the article is publicly visible"
       date:
         type: "DateTime"
+        description: "Publication date and time"
       url_key:
         type: "String"
+        description: "URL-friendly slug for routing (e.g., 'how-to-use-graphql')"

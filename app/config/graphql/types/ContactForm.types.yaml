@@ -1,16 +1,23 @@
 ContactForm:
   type: object
   config:
+    description: "Submitted contact form entry"
     fields:
       id:
         type: "Int!"
+        description: "Unique submission identifier"
       name:
         type: "String!"
+        description: "Submitter's full name"
       email:
         type: "String!"
+        description: "Submitter's email address"
       subject:
         type: "String!"
+        description: "Subject of the inquiry"
       message:
         type: "String!"
+        description: "Detailed message content"
       createdAt:
         type: "DateTime!"
+        description: "Submission timestamp"

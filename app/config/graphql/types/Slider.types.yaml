@@ -1,13 +1,17 @@
 Slider:
   type: object
   config:
-    description: "Slider details"
+    description: "Collection of slides for carousel display"
     fields:
       id:
         type: "Int"
+        description: "Unique slider identifier"
       title:
         type: "String"
+        description: "Administrative title"
       slider_key:
         type: "String"
+        description: "Unique string identifier (e.g., 'homepage-hero')"
       slides:
         type: "[Slide]"
+        description: "Contained slide components"

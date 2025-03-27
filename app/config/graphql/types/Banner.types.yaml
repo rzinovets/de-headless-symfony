@@ -1,17 +1,23 @@
 Banner:
   type: object
   config:
-    description: "Banner"
+    description: "Promotional banner with call-to-action elements"
     fields:
       id:
         type: "Int!"
+        description: "Unique banner identifier"
       title:
         type: "String"
+        description: "Headline text (max 100 chars)"
       buttonTitle:
         type: "String"
+        description: "Call-to-action button text"
       image:
         type: "String"
+        description: "URL of the banner image asset"
       isActive:
         type: "Boolean"
+        description: "Whether the banner should be displayed"
       url:
         type: "String"
+        description: "Destination URL when clicked"

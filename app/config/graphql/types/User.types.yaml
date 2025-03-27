@@ -1,30 +1,44 @@
 User:
   type: object
   config:
+    description: "System user account with personal details"
     fields:
       id:
         type: "Int!"
+        description: "Unique user identifier"
       username:
         type: "String!"
+        description: "Login username"
       email:
         type: "String!"
+        description: "Primary email address"
       roles:
         type: "[String!]!"
+        description: "Assigned permission roles"
       fullName:
         type: "String"
+        description: "Complete given name"
       dateOfBirth:
         type: "DateTime"
+        description: "Birth date"
       gender:
         type: "String"
+        description: "Gender identity"
       phoneNumber:
         type: "String"
+        description: "Primary contact number"
       streetAddressLine1:
         type: "String"
+        description: "Primary address line"
       streetAddressLine2:
         type: "String"
+        description: "Secondary address line"
       city:
         type: "String"
+        description: "City of residence"
       postCode:
         type: "String"
+        description: "Postal/ZIP code"
       disabilities:
         type: "String"
+        description: "Accessibility requirements"

@@ -1,18 +1,17 @@
 Menu:
   type: object
   config:
-    description: "Menu"
+    description: "Website navigation menu item"
     fields:
       id:
         type: "Int"
-        description: "Id menu item"
+        description: "Unique menu item identifier"
       parent_id:
         type: "Int"
-        description: "Parent id of menu item"
+        description: "Parent item ID for hierarchical menus"
       title:
         type: "String"
-        description: "Title of Menu"
+        description: "Display text for the menu item"
       url:
         type: "String"
-        description: "Url of Menu"
-
+        description: "Destination URL or route"

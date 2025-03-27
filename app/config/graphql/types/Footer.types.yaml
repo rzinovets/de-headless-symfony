@@ -1,23 +1,23 @@
 Footer:
   type: object
   config:
-    description: "Footer"
+    description: "Website footer navigation item"
     fields:
       id:
         type: "Int"
-        description: "Id footer item"
+        description: "Unique footer item identifier"
       column_footer:
         type: "Int"
-        description: "Number of footer column"
+        description: "Column number (1-4 typically)"
       title:
         type: "String"
-        description: "Title of Menu"
+        description: "Display text for the link"
       value:
         type: "String"
-        description: "Url of Menu"
+        description: "URL or route destination"
       position:
         type: "String"
-        description: "Position item in column"
+        description: "Vertical ordering (top/middle/bottom)"
       type:
         type: "Int"
-        description: "type of footer item"
+        description: "Item type (1=link, 2=header, 3=divider)"

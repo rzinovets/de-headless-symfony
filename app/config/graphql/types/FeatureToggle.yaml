@@ -1,0 +1,13 @@
+FeatureToggle:
+  type: object
+  config:
+    description: "Feature toggle"
+    fields:
+      id:
+        type: "Int!"
+      code:
+        type: "String!"
+      description:
+        type: "String"
+      enabled:
+        type: "Boolean!"

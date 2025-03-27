@@ -1,21 +1,29 @@
 Slide:
   type: object
   config:
-    description: "Slide details"
+    description: "Individual slide within a slider component"
     fields:
       id:
         type: "Int"
+        description: "Unique slide identifier"
       is_enabled:
         type: "Boolean"
+        description: "Whether the slide is active"
       slider_id:
         type: "Int"
+        description: "Parent slider identifier"
       title:
         type: "String"
+        description: "Slide headline text"
       description:
         type: "String"
+        description: "Supporting content text"
       image:
         type: "String"
+        description: "Background image URL"
       button_url:
         type: "String"
+        description: "Call-to-action button destination"
       button_title:
         type: "String"
+        description: "Button display text"

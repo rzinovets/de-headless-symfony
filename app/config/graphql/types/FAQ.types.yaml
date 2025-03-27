@@ -1,8 +1,17 @@
 FAQ:
   type: object
   config:
+    description: "Frequently Asked Question entry"
     fields:
-      id: { type: "Int!" }
-      question: { type: "String!" }
-      answer: { type: "String!" }
-      priority: { type: "Int" }
+      id:
+        type: "Int!"
+        description: "Unique FAQ identifier"
+      question:
+        type: "String!"
+        description: "The question being asked"
+      answer:
+        type: "String!"
+        description: "Detailed answer to the question"
+      priority:
+        type: "Int"
+        description: "Sorting order (lower numbers appear first)"

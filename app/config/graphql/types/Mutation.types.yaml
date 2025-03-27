@@ -1,95 +1,130 @@
 Mutation:
   type: object
   config:
+    description: "Root mutation type for all write operations"
     fields:
       CreateAccount:
         type: User!
+        description: "Registers a new user account"
         resolve: "@=mutation('create_account', args['input'])"
         args:
           input:
             type: CreateAccountInput!
+            description: "Account registration details"
       LoginAccount:
         type: Token!
+        description: "Authenticates user and returns access token"
         resolve: "@=mutation('login_account', args['input'])"
         args:
           input:
             type: LoginAccountInput!
+            description: "Login credentials"
       CreateChat:
         type: Chat!
+        description: "Initializes a new chat session"
         resolve: "@=mutation('create_chat', args['input'])"
         args:
           input:
             type: CreateChatInput!
+            description: "Chat initialization parameters"
       SendMessage:
         type: Message!
+        description: "Posts a message to an existing chat"
         resolve: "@=mutation('send_message', args['input'])"
         args:
           input:
             type: SendMessageInput!
+            description: "Message content and metadata"
 
 CreateChatInput:
   type: input-object
   config:
+    description: "Input for initiating a chat session"
     fields:
       token:
         type: "String!"
+        description: "Authentication token for the user"
 
 CreateAccountInput:
   type: input-object
   config:
+    description: "Input for user registration"
     fields:
       email:
         type: "String!"
+        description: "Primary email address"
       username:
         type: "String"
+        description: "Preferred username (optional)"
       password:
         type: "String!"
+        description: "Account password (min 8 chars)"
       fullName:
         type: "String"
+        description: "Complete given name"
       dateOfBirth:
         type: "DateTime"
+        description: "Birth date (YYYY-MM-DD)"
       gender:
         type: "String"
+        description: "Gender identity"
       phoneNumber:
         type: "String"
+        description: "Contact phone number"
       streetAddressLine1:
         type: "String"
+        description: "Primary address line"
       streetAddressLine2:
         type: "String"
+        description: "Secondary address line"
       city:
         type: "String"
+        description: "City of residence"
       postCode:
         type: "String"
+        description: "Postal/ZIP code"
       disabilities:
         type: "String"
+        description: "Accessibility requirements"
 
 LoginAccountInput:
   type: input-object
   config:
+    description: "Input for user authentication"
     fields:
       email:
         type: "String!"
+        description: "Registered email address"
       password:
         type: "String!"
+        description: "Account password"
 
 CreateContactFormInput:
   type: input-object
   config:
+    description: "Input for submitting contact forms"
     fields:
       name:
         type: "String!"
+        description: "Submitter's full name"
       email:
         type: "String!"
+        description: "Reply email address"
       subject:
         type: "String!"
+        description: "Inquiry subject line"
       message:
         type: "String!"
+        description: "Detailed message content"
 
 SendMessageInput:
   type: input-object
   config:
+    description: "Input for sending chat messages"
     fields:
       token:
         type: "String!"
+        description: "Valid chat session token"
       content:
         type: "String!"
+        description: "Message text content"
