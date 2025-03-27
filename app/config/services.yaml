@@ -23,6 +23,9 @@ services:
     App\EventListener\ContactFormListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist, entity: App\Entity\ContactForm }
+    App\EventListener\MessageListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, entity: App\Entity\MessageListener}
     App\Services\Notification\Providers\EmailProvider:
         public: false
         arguments:

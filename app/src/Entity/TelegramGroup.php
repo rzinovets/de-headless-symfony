@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class TelegramGroup
 {
     public const CODE_GROUP_NOTIFY_CONTACT_FORM = 'contact_form';
+    public const CODE_GROUP_NOTIFY_SUPPORT = 'support';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

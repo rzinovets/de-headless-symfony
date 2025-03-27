@@ -14,12 +14,20 @@ class TelegramGroupFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        $telegramGroup = new TelegramGroup();
-        $telegramGroup->setCode(TelegramGroup::CODE_GROUP_NOTIFY_CONTACT_FORM);
-        $telegramGroup->setChatId('-4657886914');
-        $telegramGroup->setDescription('Contact form group');
+        $contactFormGroup = new TelegramGroup();
+        $contactFormGroup->setCode(TelegramGroup::CODE_GROUP_NOTIFY_CONTACT_FORM);
+        $contactFormGroup->setChatId('-4657886914');
+        $contactFormGroup->setDescription('Contact form group');
 
-        $manager->persist($telegramGroup);
+        $manager->persist($contactFormGroup);
+
+        $supportGroup = new TelegramGroup();
+        $supportGroup->setCode(TelegramGroup::CODE_GROUP_NOTIFY_SUPPORT);
+        $supportGroup->setChatId('-4778691122');
+        $supportGroup->setDescription('Support group');
+
+        $manager->persist($supportGroup);
+
         $manager->flush();
     }
 }
