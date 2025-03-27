@@ -12,38 +12,6 @@ services:
             - '../src/Kernel.php'
 
     Doctrine\ORM\EntityManager: "@doctrine.orm.default_entity_manager"
-    app.menu.resolver:
-        class: App\GraphQL\Resolver\MenuResolver
-        tags:
-            - { name: overblog_graphql.resolver }
-    app.slider.resolver:
-        class: App\GraphQL\Resolver\SliderResolver
-        tags:
-            - { name: overblog_graphql.resolver }
-    app.slide.resolver:
-        class: App\GraphQL\Resolver\SlideResolver
-        tags:
-            - { name: overblog_graphql.resolver }
-    app.footer.resolver:
-        class: App\GraphQL\Resolver\FooterResolver
-        tags:
-            - { name: overblog_graphql.resolver }
-    app.article.resolver:
-        class: App\GraphQL\Resolver\ArticleResolver
-        tags:
-            - { name: overblog_graphql.resolver }
-    app.config.resolver:
-        class: App\GraphQL\Resolver\ConfigResolver
-        tags:
-            - { name: overblog_graphql.resolver }
-    app.block.resolver:
-        class: App\GraphQL\Resolver\BlockResolver
-        tags:
-            - { name: overblog_graphql.resolver }
-    app.banner.resolver:
-        class: App\GraphQL\Resolver\BannerResolver
-        tags:
-            - { name: overblog_graphql.resolver }
     App\GraphQL\Resolver\SearchResolver:
         arguments:
             $faqFinder: '@fos_elastica.finder.app_faq'

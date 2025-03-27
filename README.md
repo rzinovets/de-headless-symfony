@@ -3,7 +3,7 @@
 ![Symfony](https://img.shields.io/badge/Symfony-6.4-blue.svg?style=flat-square)
 ![PHP](https://img.shields.io/badge/PHP-8.3-blue.svg?style=flat-square)
 ![GraphQL](https://img.shields.io/badge/GraphQL-✔-blue.svg?style=flat-square)
-![Elasticsearch](https://img.shields.io/badge/Elasticsearch-8.x-blue.svg?style=flat-square)
+![Elasticsearch](https://img.shields.io/badge/Elasticsearch-8.12-blue.svg?style=flat-square)
 ![Docker](https://img.shields.io/badge/Docker-✔-blue.svg?style=flat-square)
 ![EasyAdmin](https://img.shields.io/badge/EasyAdmin-✔-blue.svg?style=flat-square)
 
