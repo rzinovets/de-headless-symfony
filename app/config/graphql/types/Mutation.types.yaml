@@ -35,6 +35,12 @@ Mutation:
           input:
             type: SendMessageInput!
             description: "Message content and metadata"
+      CreateContactForm:
+        type: ContactForm!
+        resolve: "@=mutation('create_contact_form', args['input'])"
+        args:
+          input:
+            type: CreateContactFormInput!
 
 CreateChatInput:
   type: input-object

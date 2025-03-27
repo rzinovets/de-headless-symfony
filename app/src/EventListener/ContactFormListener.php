@@ -4,23 +4,23 @@ namespace App\EventListener;
 
 use App\Entity\ContactForm;
 use App\Entity\TelegramGroup;
-use App\Repository\TelegramGroupRepository;
-use App\Services\Notification\Notifications\TelegramNotification;
+use App\Message\ContactFormNotificationMessage;
 use App\Services\Notification\NotificationService;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 readonly class ContactFormListener
 {
     /**
      * @param NotificationService $notificationService
-     * @param TelegramGroupRepository $telegramGroupRepository
      * @param LoggerInterface $logger
+     * @param MessageBusInterface $messageBus
      */
     public function __construct(
-        private NotificationService     $notificationService,
-        private TelegramGroupRepository $telegramGroupRepository,
-        private LoggerInterface $logger
+        private NotificationService $notificationService,
+        private LoggerInterface $logger,
+        private MessageBusInterface $messageBus
     ) {}
 
     /**
@@ -59,13 +59,7 @@ readonly class ContactFormListener
             ]
         );
 
-        $group = $this->telegramGroupRepository->findByCode(TelegramGroup::CODE_GROUP_NOTIFY_CONTACT_FORM);
-
-        $telegramNotification = new TelegramNotification();
-        $telegramNotification
-            ->setText($text)
-            ->setGroup($group);
-
-        $this->notificationService->send([$telegramNotification]);
+        $groupCode = TelegramGroup::CODE_GROUP_NOTIFY_CONTACT_FORM;
+        $this->messageBus->dispatch(new ContactFormNotificationMessage($text, $groupCode));
     }
 }

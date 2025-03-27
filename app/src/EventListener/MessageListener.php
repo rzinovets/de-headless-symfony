@@ -4,23 +4,23 @@ namespace App\EventListener;
 
 use App\Entity\Message;
 use App\Entity\TelegramGroup;
-use App\Repository\TelegramGroupRepository;
-use App\Services\Notification\Notifications\TelegramNotification;
+use App\Message\TelegramNotificationMessage;
 use App\Services\Notification\NotificationService;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 readonly class MessageListener
 {
     /**
      * @param NotificationService $notificationService
-     * @param TelegramGroupRepository $telegramGroupRepository
      * @param LoggerInterface $logger
+     * @param MessageBusInterface $messageBus
      */
     public function __construct(
         private NotificationService $notificationService,
-        private TelegramGroupRepository $telegramGroupRepository,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
+        private MessageBusInterface $messageBus
     ) {}
 
     /**
@@ -65,13 +65,8 @@ readonly class MessageListener
             ]
         );
 
-        $group = $this->telegramGroupRepository->findByCode(TelegramGroup::CODE_GROUP_NOTIFY_SUPPORT);
+        $group = TelegramGroup::CODE_GROUP_NOTIFY_SUPPORT;
 
-        $telegramNotification = new TelegramNotification();
-        $telegramNotification
-            ->setText($text)
-            ->setGroup($group);
-
-        $this->notificationService->send([$telegramNotification]);
+        $this->messageBus->dispatch(new TelegramNotificationMessage($text, $group));
     }
 }
