@@ -19,7 +19,7 @@ class Slide
     private ?int $slider_id;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    private $image = null;
+    private ?string $image = null;
 
     #[ORM\Column(type: Types::TEXT,nullable: true)]
     private ?string $description;
@@ -27,7 +27,7 @@ class Slide
     #[ORM\Column]
     private ?bool $is_enabled = null;
 
-    #[ORM\ManyToOne(targetEntity: "Slider", cascade: ["remove"], inversedBy: "slades")]
+    #[ORM\ManyToOne(targetEntity: Slider::class, inversedBy: 'slides')]
     #[ORM\JoinColumn(name: "slider_id", referencedColumnName: "id", onDelete: "CASCADE")]
     private ?Slider $slider;
 

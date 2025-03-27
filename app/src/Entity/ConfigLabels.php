@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ConfigLabelsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ConfigLabelsRepository::class)]
@@ -27,10 +28,10 @@ class ConfigLabels
     private ?string $type = null;
 
     #[ORM\Column(type: 'boolean')]
-    private ?string $isSecure = null;
+    private bool $isSecure = false;
 
     #[ORM\OneToMany(mappedBy: "labels", targetEntity: "ConfigOptions")]
-    private $options;
+    private Collection $options;
 
     #[ORM\ManyToOne(targetEntity: "ConfigGroups", cascade: ["remove"], inversedBy: "labels")]
     #[ORM\JoinColumn(name: "group_id", referencedColumnName: "id", onDelete: "CASCADE")]
