@@ -101,7 +101,7 @@ class GeneratePriceCommand extends Command
             file_put_contents($tempFilePath, $fileContent);
 
             $reader = IOFactory::createReader('Xlsx');
-            $reader->setReadDataOnly(true);
+            $reader->setReadDataOnly(false);
             $reader->setReadEmptyCells(false);
 
             $spreadsheet = $reader->load($tempFilePath);
@@ -127,6 +127,7 @@ class GeneratePriceCommand extends Command
             }
 
             $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+            $spreadsheet->getActiveSheet()->getProtection()->setSheet(false);
             $writer->save($tempFilePath);
 
             $text = $this->notificationService->generateTelegramText(
