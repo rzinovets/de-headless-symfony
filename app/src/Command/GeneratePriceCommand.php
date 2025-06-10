@@ -105,7 +105,19 @@ class GeneratePriceCommand extends Command
             $reader->setReadEmptyCells(false);
 
             $spreadsheet = $reader->load($tempFilePath);
-            $sheet = $spreadsheet->getActiveSheet();
+            $sheet = $spreadsheet->getSheet(0);
+
+            while ($spreadsheet->getSheetCount() > 1) {
+                $spreadsheet->removeSheetByIndex(1);
+            }
+
+            $drawings = $sheet->getDrawingCollection();
+
+            if (count($drawings) > 0) {
+                $sheet->getDrawingCollection()->offsetUnset(0);
+            }
+
+            $sheet->removeRow(1, 4);
 
             foreach ($sheet->getRowIterator() as $row) {
                 $cellIterator = $row->getCellIterator();
