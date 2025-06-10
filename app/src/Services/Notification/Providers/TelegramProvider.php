@@ -7,6 +7,7 @@ namespace App\Services\Notification\Providers;
 use App\Entity\TelegramGroup;
 use App\Services\Notification\Notifications\TelegramNotification;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Exception;
@@ -42,6 +43,21 @@ class TelegramProvider implements ProviderInterface
             $chatId = $group->getChatId();
             if (!is_string($chatId)) {
                 throw new \Exception('Group does not have a valid chat ID.');
+            }
+
+            $attachment = $notification->getAttachment();
+            if ($attachment instanceof File) {
+                $this->api->sendDocument(
+                    $chatId,
+                    new \CURLFile($attachment->getRealPath()),
+                    $notification->getText(),
+                    null,
+                    null,
+                    false,
+                    'HTML'
+                );
+
+                return;
             }
 
             $this->api->sendMessage(

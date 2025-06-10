@@ -6,6 +6,7 @@
     "require": {
         "php": ">=8.3",
         "ext-ctype": "*",
+        "ext-curl": "*",
         "ext-iconv": "*",
         "cron/cron-bundle": "*",
         "doctrine/annotations": "^2.0",
@@ -19,6 +20,7 @@
         "friendsofsymfony/elastica-bundle": "^6.6",
         "nikic/php-parser": "^5.4",
         "overblog/graphql-bundle": "^0.15.2",
+        "phpoffice/phpspreadsheet": "^4.3",
         "symfony/asset": "^6.4",
         "symfony/console": "^6.4",
         "symfony/doctrine-messenger": "^6.4",
