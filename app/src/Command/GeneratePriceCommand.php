@@ -41,12 +41,36 @@ class GeneratePriceCommand extends Command
     {
         ini_set('memory_limit', self::MEMORY_LIMIT);
 
+        $output->writeln("");
+        $output->writeln("<fg=blue;options=bold>=== Price List Generator ===</>");
+        $output->writeln("<fg=blue>Processing price list from Google Sheets to Telegram</>");
+        $output->writeln("");
+
         try {
+            $output->write("<fg=yellow>Processing...</> ");
+
             $this->exelToTGService->handleExcel();
-            $output->writeln('Price list successfully processed and sent');
+
+            $output->write("\x0D");
+            $output->write("\x1B[2K");
+
+            $output->writeln("<fg=green>✔ Price list successfully processed and sent to Telegram</>");
+            $output->writeln("<fg=green>✔ Memory usage: " . round(memory_get_peak_usage() / 1024 / 1024, 2) . "MB</>");
+            $output->writeln("");
+            $output->writeln("<fg=blue;options=bold>Operation completed successfully!</>");
+            $output->writeln("");
+
             return Command::SUCCESS;
         } catch (Exception $e) {
-            $output->writeln('<error>Error: ' . $e->getMessage() . '</error>');
+            $output->writeln("");
+            $output->writeln("<fg=red;options=bold>✖ Error occurred:</>");
+            $output->writeln("<fg=red>  " . $e->getMessage() . "</>");
+            $output->writeln("");
+            $output->writeln("<bg=red;fg=white>                </>");
+            $output->writeln("<bg=red;fg=white>  PROCESS FAILED  </>");
+            $output->writeln("<bg=red;fg=white>                </>");
+            $output->writeln("");
+
             return Command::FAILURE;
         } finally {
             ini_restore('memory_limit');

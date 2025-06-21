@@ -18,7 +18,7 @@ readonly class ExelToTGService
     private const string TEMP_FILE_EXTENSION = '.xlsx';
     private const string EXCHANGE_RATE_API_URL = 'https://api.nbrb.by/exrates/rates/456';
     private const string SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1clohCQ_K13d9PZDjhTdZgkO2n_jw05jpTW5W8o-LZhA/export?format=xlsx';
-    private const int MARKUP_PERCENT = 30;
+    private const int MARKUP_PERCENT = 20;
     private const int ROWS_TO_REMOVE = 4;
     private const string TELEGRAM_TEMPLATE = 'notification/telegram/current-shishka-exel.twig';
 
